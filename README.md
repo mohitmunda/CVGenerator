@@ -79,3 +79,11 @@ Font selection is stored locally in the browser and can be changed independently
 - Replaced the previous custom-section renderer with an isolated renderer that updates only its dedicated preview container, preventing continuous/recursive text generation.
 - Custom sections now render only their title, content and optional additional detail.
 - Sidebar layout was rebuilt with fixed A4 geometry, bounded content widths, predictable sidebar dimensions, and safer text wrapping.
+
+
+## Version 12 — Sidebar & Final Sections
+- Removed the Custom Section option and its preview renderer.
+- Added Nationality directly below Languages Spoken in Personal Information.
+- Added a Declaration section that is always the final CV section.
+- Declaration supports text, place, date, and signature/name.
+- Rebuilt Sidebar layout using a fixed A4 content box and stable inner padding so text remains aligned and inside the printable page.

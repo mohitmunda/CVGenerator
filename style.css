@@ -214,11 +214,6 @@
 .cv p,.cv li,.cv td,.cv div{overflow-wrap:anywhere}
 
 /* Custom sections: only clean rendered content */
-.custom-preview-sections{
-  width:100%;
-  min-width:0;
-  margin-top:10px;
-}
 .custom-preview-section{
   margin-top:10px;
   min-width:0;
@@ -240,12 +235,6 @@
   display:flex;
   flex-direction:column;
   gap:10px;
-}
-.custom-editor-item{
-  border:1px solid #dfe4ea;
-  border-radius:10px;
-  padding:10px;
-  background:#fafbfc;
 }
 .custom-editor-item .custom-row{
   display:grid;
@@ -388,11 +377,7 @@
   max-width:100%;
   height:auto;
 }
-.cv.layout-sidebar .custom-preview-sections{
-  width:100%;
-  max-width:100%;
-}
-.cv.layout-sidebar .custom-preview-section{
+.cv.layout-sidebar .cv.layout-sidebar .custom-preview-section{
   width:100%;
   max-width:100%;
   overflow:hidden;
@@ -404,16 +389,10 @@
 }
 
 /* Clean custom editor styling */
-.custom-editor-item{
-  overflow:hidden;
-}
 .custom-editor-item .custom-title,
 .custom-editor-item .custom-content-input,
 .custom-editor-item .custom-extra-input{
   box-sizing:border-box;
-}
-.custom-preview-sections{
-  clear:both;
 }
 .custom-preview-section + .custom-preview-section{
   margin-top:12px;
@@ -444,4 +423,133 @@
     padding-left:12mm !important;
     padding-right:30mm !important;
   }
+}
+
+/* ===== Version 12: Stable Sidebar Alignment ===== */
+.cv.layout-sidebar{
+  width:210mm !important;
+  max-width:210mm !important;
+  min-height:297mm !important;
+  height:auto !important;
+  margin:0 auto !important;
+  padding:0 !important;
+  position:relative !important;
+  display:block !important;
+  overflow:hidden !important;
+}
+.cv.layout-sidebar .cv-top{
+  width:100% !important;
+  max-width:none !important;
+  margin:0 !important;
+  padding:12mm 31mm 7mm 13mm !important;
+  position:relative !important;
+  display:block !important;
+}
+.cv.layout-sidebar .cv-body,
+.cv.layout-sidebar .cv-main{
+  width:100% !important;
+  max-width:none !important;
+  min-width:0 !important;
+  margin:0 !important;
+  padding:0 31mm 10mm 13mm !important;
+  display:block !important;
+  position:relative !important;
+}
+.cv.layout-sidebar .cv-sidebar-accent{
+  position:absolute !important;
+  top:0 !important;
+  right:0 !important;
+  bottom:0 !important;
+  width:24mm !important;
+  height:100% !important;
+  min-width:24mm !important;
+  max-width:24mm !important;
+  margin:0 !important;
+  padding:0 !important;
+  overflow:hidden !important;
+}
+.cv.layout-sidebar .cv-top *,
+.cv.layout-sidebar .cv-body *,
+.cv.layout-sidebar .cv-main *{
+  max-width:100%;
+  min-width:0;
+}
+.cv.layout-sidebar .cv-name{
+  max-width:100% !important;
+  overflow-wrap:normal !important;
+  word-break:normal !important;
+  white-space:normal !important;
+}
+.cv.layout-sidebar .section-title{
+  max-width:100% !important;
+  white-space:normal !important;
+  overflow-wrap:normal !important;
+  word-break:normal !important;
+}
+.cv.layout-sidebar p,
+.cv.layout-sidebar li,
+.cv.layout-sidebar td,
+.cv.layout-sidebar .value,
+.cv.layout-sidebar .address,
+.cv.layout-sidebar .contact{
+  white-space:normal !important;
+  word-break:normal !important;
+  overflow-wrap:break-word !important;
+  hyphens:none !important;
+}
+.cv.layout-sidebar .personal-grid{
+  width:100% !important;
+  max-width:100% !important;
+  min-width:0 !important;
+  grid-template-columns:minmax(0,34%) 8px minmax(0,66%) !important;
+}
+.cv.layout-sidebar img{
+  max-width:100% !important;
+  height:auto !important;
+}
+.cv.layout-sidebar .declaration-preview{
+  width:100%;
+  max-width:100%;
+  min-width:0;
+}
+.cv.layout-sidebar .declaration-meta-preview{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:8px;
+  margin-top:10px;
+  font-size:.82em;
+}
+.declaration-preview{
+  margin-top:14px;
+  page-break-inside:avoid;
+}
+.declaration-text{
+  white-space:pre-line;
+  overflow-wrap:anywhere;
+}
+.declaration-meta-preview{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:12px;
+  margin-top:12px;
+  font-size:.82em;
+}
+.declaration-meta-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:10px;
+  margin-top:10px;
+}
+@media(max-width:700px){
+  .declaration-meta-grid,.declaration-meta-preview{grid-template-columns:1fr}
+}
+@media print{
+  .cv.layout-sidebar{
+    width:210mm !important;
+    min-height:297mm !important;
+    overflow:hidden !important;
+  }
+  .cv.layout-sidebar .cv-top{padding:10mm 29mm 6mm 11mm !important}
+  .cv.layout-sidebar .cv-body,
+  .cv.layout-sidebar .cv-main{padding:0 29mm 8mm 11mm !important}
 }

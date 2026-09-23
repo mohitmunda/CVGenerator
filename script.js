@@ -235,210 +235,79 @@ try{let s=localStorage.getItem('professionalCV');if(s)apply(JSON.parse(s))}catch
 })();
 
 
-/* ===== Version 11: isolated Custom Sections + Nationality + Sidebar renderer ===== */
+
+/* ===== Version 12: Nationality + Declaration + stable final renderer ===== */
 (function(){
   'use strict';
-
   const $ = id => document.getElementById(id);
   const cv = document.querySelector('.cv');
 
-  function escapeHTML(value){
-    return String(value == null ? '' : value)
-      .replace(/&/g,'&amp;')
-      .replace(/</g,'&lt;')
-      .replace(/>/g,'&gt;')
-      .replace(/"/g,'&quot;')
-      .replace(/'/g,'&#39;');
-  }
-
-  /* ---------- Personal Information: Nationality ---------- */
   function updateNationality(){
     const input = $('nationality');
-    const targets = document.querySelectorAll('[data-field="nationality"]');
     const value = input ? input.value.trim() : '';
-    targets.forEach(t => t.textContent = value);
-    targets.forEach(t => {
-      const row = t.closest('.personal-item');
+    document.querySelectorAll('[data-field="nationality"]').forEach(el=>{
+      el.textContent = value;
+      const row = el.closest('.personal-item');
       if(row) row.style.display = value ? '' : 'none';
     });
   }
-  const nationalityInput = $('nationality');
-  if(nationalityInput) nationalityInput.addEventListener('input', updateNationality);
+  const nat = $('nationality');
+  if(nat){
+    nat.addEventListener('input', updateNationality);
+    nat.addEventListener('change', updateNationality);
+  }
   updateNationality();
 
-  /* ---------- Custom Sections ---------- */
-  const customList = $('customSections');
-  const addCustom = $('addCustomSection');
-  let previewHost = $('customPreviewSections');
+  function renderDeclaration(){
+    const host = $('declarationPreview');
+    if(!host) return;
+    const enabled = $('declarationEnabled');
+    const text = $('declarationText')?.value.trim() || '';
+    const place = $('declarationPlace')?.value.trim() || '';
+    const date = $('declarationDate')?.value.trim() || '';
+    const signature = $('declarationSignature')?.value.trim() || '';
 
-  // If a preview host is missing, create exactly ONE.
-  if(!previewHost && cv){
-    previewHost = document.createElement('div');
-    previewHost.id = 'customPreviewSections';
-    previewHost.className = 'custom-preview-sections';
-    cv.appendChild(previewHost);
-  }
-
-  function renderCustomSections(){
-    if(!previewHost) return;
-
-    // Important: only replace THIS dedicated host.
-    // Never write into the editor, the whole CV, or document.body.
-    previewHost.replaceChildren();
-
-    if(!customList) return;
-
-    const items = customList.querySelectorAll(':scope > .custom-editor-item');
-    items.forEach(item => {
-      const titleEl = item.querySelector('.custom-title');
-      const contentEl = item.querySelector('.custom-content-input');
-      const extraEl = item.querySelector('.custom-extra-input');
-
-      const title = titleEl ? titleEl.value.trim() : '';
-      const content = contentEl ? contentEl.value.trim() : '';
-      const extra = extraEl ? extraEl.value.trim() : '';
-
-      // Completely empty custom sections are not rendered.
-      if(!title && !content && !extra) return;
-
-      const section = document.createElement('section');
-      section.className = 'custom-preview-section';
-
-      if(title){
-        const heading = document.createElement('h3');
-        heading.className = 'section-title';
-        heading.textContent = title;
-        section.appendChild(heading);
-      }
-
-      if(extra){
-        const subtitle = document.createElement('div');
-        subtitle.className = 'custom-subtitle';
-        subtitle.textContent = extra;
-        section.appendChild(subtitle);
-      }
-
-      if(content){
-        const body = document.createElement('div');
-        body.className = 'custom-content';
-        body.textContent = content;
-        section.appendChild(body);
-      }
-
-      previewHost.appendChild(section);
-    });
-  }
-
-  function wireCustomItem(item){
-    item.querySelectorAll('input, textarea').forEach(el => {
-      el.addEventListener('input', renderCustomSections);
-      el.addEventListener('change', renderCustomSections);
-    });
-
-    const del = item.querySelector('.custom-delete');
-    if(del){
-      del.addEventListener('click', function(){
-        item.remove();
-        renderCustomSections();
-      });
-    }
-  }
-
-  function addCustomSection(data){
-    if(!customList) return;
-
-    const item = document.createElement('div');
-    item.className = 'custom-editor-item';
-
-    const title = data && data.title ? data.title : '';
-    const content = data && data.content ? data.content : '';
-    const extra = data && data.extra ? data.extra : '';
-
-    item.innerHTML = `
-      <div class="custom-row">
-        <input class="custom-title" type="text" placeholder="Section title, e.g. Publications">
-        <button type="button" class="custom-delete">Delete</button>
-      </div>
-      <textarea class="custom-content-input" placeholder="Enter content for this section..."></textarea>
-      <div class="custom-extra">
-        <label>Additional Option</label>
-        <input class="custom-extra-input" type="text" placeholder="Optional subtitle / extra detail">
-      </div>`;
-
-    item.querySelector('.custom-title').value = title;
-    item.querySelector('.custom-content-input').value = content;
-    item.querySelector('.custom-extra-input').value = extra;
-
-    customList.appendChild(item);
-    wireCustomItem(item);
-    renderCustomSections();
-  }
-
-  if(addCustom){
-    addCustom.addEventListener('click', function(e){
-      e.preventDefault();
-      addCustomSection({});
-    });
-  }
-
-  if(customList){
-    customList.querySelectorAll(':scope > .custom-editor-item').forEach(wireCustomItem);
-  }
-  renderCustomSections();
-
-  /* ---------- Career Objective ---------- */
-  function renderCareerObjective(){
-    if(!cv) return;
-    const enabled = $('careerObjectiveEnabled');
-    const textEl = $('careerObjective');
-    const extraEl = $('careerObjectiveAdditional');
-
-    const text = textEl ? textEl.value.trim() : '';
-    const extra = extraEl ? extraEl.value.trim() : '';
-    let node = document.getElementById('careerObjectivePreview');
-
-    if(!node){
-      node = document.createElement('section');
-      node.id = 'careerObjectivePreview';
-      node.className = 'career-objective-preview';
-      const first = cv.querySelector('.cv-top') || cv.firstElementChild;
-      if(first) first.insertAdjacentElement('afterend', node);
-      else cv.appendChild(node);
-    }
-
-    node.replaceChildren();
-
-    if(!enabled || !enabled.checked || (!text && !extra)){
-      node.style.display = 'none';
+    host.replaceChildren();
+    if(!enabled || !enabled.checked || (!text && !place && !date && !signature)){
+      host.style.display = 'none';
       return;
     }
+    host.style.display = '';
 
-    node.style.display = '';
     const heading = document.createElement('h3');
     heading.className = 'section-title';
-    heading.textContent = 'CAREER OBJECTIVE';
-    node.appendChild(heading);
+    heading.textContent = 'DECLARATION';
+    host.appendChild(heading);
 
     if(text){
-      const body = document.createElement('div');
-      body.className = 'objective-text';
-      body.textContent = text;
-      node.appendChild(body);
+      const p = document.createElement('div');
+      p.className = 'declaration-text';
+      p.textContent = text;
+      host.appendChild(p);
     }
-    if(extra){
-      const sub = document.createElement('div');
-      sub.className = 'objective-extra';
-      sub.textContent = extra;
-      node.appendChild(sub);
+
+    if(place || date || signature){
+      const meta = document.createElement('div');
+      meta.className = 'declaration-meta-preview';
+      if(place){
+        const x=document.createElement('div'); x.innerHTML='<strong>Place:</strong> '; x.appendChild(document.createTextNode(place)); meta.appendChild(x);
+      }
+      if(date){
+        const x=document.createElement('div'); x.innerHTML='<strong>Date:</strong> '; x.appendChild(document.createTextNode(date)); meta.appendChild(x);
+      }
+      if(signature){
+        const x=document.createElement('div'); x.innerHTML='<strong>Signature:</strong> '; x.appendChild(document.createTextNode(signature)); meta.appendChild(x);
+      }
+      host.appendChild(meta);
     }
   }
 
-  ['careerObjective','careerObjectiveAdditional','careerObjectiveEnabled'].forEach(id=>{
-    const el = $(id);
+  ['declarationEnabled','declarationText','declarationPlace','declarationDate','declarationSignature'].forEach(id=>{
+    const el=$(id);
     if(el){
-      el.addEventListener('input', renderCareerObjective);
-      el.addEventListener('change', renderCareerObjective);
+      el.addEventListener('input', renderDeclaration);
+      el.addEventListener('change', renderDeclaration);
     }
   });
-  renderCareerObjective();
+  renderDeclaration();
 })();
