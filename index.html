@@ -81,7 +81,7 @@ PIN-123456</textarea></label>
     <div class="two"><label>Phone<input id="phone" value="+91 98765 43210"></label><label>Email<input id="email" value="alex.johnson@example.com"></label></div>
     <div class="two"><label>Website<input id="website" placeholder="https://example.com"></label><label>LinkedIn<input id="linkedin" placeholder="linkedin.com/in/username"></label></div>
     <div class="two"><label>GitHub<input id="github" placeholder="github.com/username"></label><label>Location<input id="location" placeholder="City, State, Country"></label></div>
-    <div class="two"><label>Nationality<input id="nationality" value="INDIAN"></label><label>Professional Title<input id="title" value="WEB DESIGNER & DEVELOPER"></label></div><small id="nationalityHelp" class="field-help">Nationality will appear below LANGUAGES SPOKEN in the CV.</small>
+    <div class="two"><label>Professional Title<input id="title" value="WEB DESIGNER & DEVELOPER"></label></div>
     <div class="custom-box"><div class="subhead"><b>Additional Basic Details</b><button type="button" class="mini add-custom" data-target="basicCustom">+ Add</button></div><div id="basicCustom"></div></div>
   </section>
 
@@ -92,12 +92,8 @@ PIN-123456</textarea></label>
       <label>Father's Name<input id="father" value="ROBERT JOHNSON"></label><label>Mother's Name<input id="mother" value="MARY JOHNSON"></label>
       <label>Gender<input id="gender" value="MALE"></label><label>Marital Status<input id="marital" value="SINGLE"></label>
       <label>Languages Spoken<input id="languages" value="ENGLISH, HINDI"></label>
+      <label>Nationality<input id="nationality" value="INDIAN" placeholder="e.g. Indian" autocomplete="country-name"></label>
     </div>
-<div class="field personal-nationality-field">
-  <label for="nationality"><strong>NATIONALITY</strong></label>
-  <input id="nationality" name="nationality" type="text" placeholder="e.g. Indian" autocomplete="country-name">
-</div>
-
 <div class="custom-box"><div class="subhead"><b>Additional Personal Options</b><button type="button" class="mini add-custom" data-target="personalCustom">+ Add</button></div><div id="personalCustom"></div></div>
   </section>
 
@@ -144,23 +140,12 @@ Photography</textarea></label><label>Additional Details<textarea id="skillDetail
     <input id="careerObjectiveAdditional" type="text" placeholder="Optional subtitle / focus area">
   </div>
 </section>
-<section class="panel">
-    <div class="section-head"><div><h2>6. Optional Sections</h2><p>Fill only what you need. Empty sections stay hidden.</p></div><button class="add" id="addCustomSection">+ Add Section</button></div>
-    <label>Professional Summary<textarea id="summary" rows="3" placeholder="Short professional summary..."></textarea></label>
-    <label>Projects<textarea id="projects" rows="3" placeholder="Project — description — technology"></textarea></label>
-    <label>Certifications & Training<textarea id="certs" rows="3" placeholder="Certificate — Issuer — Year"></textarea></label>
-    <label>Achievements<textarea id="achievements" rows="3" placeholder="One per line"></textarea></label>
-    <label>Hobbies & Interests<textarea id="hobbies" rows="2" placeholder="One per line"></textarea></label>
-    <div id="customSections"></div>
-  </section>
-
-  <section class="panel">
-    <div class="section-head"><div><h2>7. Arrange CV Sections</h2><p>Drag sections or use the ↑ ↓ buttons to change their order. The order is saved with your CV data.</p></div><button class="add" type="button" id="resetOrder">Reset Order</button></div>
+<section class="panel"><div class="section-head"><div><h2>6. Arrange CV Sections</h2><p>Drag sections or use the ↑ ↓ buttons to change their order. The order is saved with your CV data.</p></div><button class="add" type="button" id="resetOrder">Reset Order</button></div>
     <div id="sectionOrder" class="section-order"></div>
   </section>
 
   <section class="panel">
-    <h2>8. Layout & Design</h2>
+    <h2>7. Layout & Design</h2>
     <div class="two">
       <label>Layout<select id="layout" name="layout" class="layout-select">
 <option value="reference">Reference Pro — Default</option>
@@ -251,7 +236,7 @@ Photography</textarea></label><label>Additional Details<textarea id="skillDetail
 <template id="customTpl"><div class="custom-row"><input class="cl" placeholder="Label"><input class="cvv" placeholder="Value"><button type="button" class="remove">×</button></div></template>
 <template id="expTpl"><div class="repeat"><div class="repeat-title"><b>Experience</b><button type="button" class="remove">Remove</button></div><div class="two"><label>Job / Role<input class="et"></label><label>Company<input class="ec"></label></div><label>Duration<input class="ed"></label><label>Description<textarea class="ex" rows="2"></textarea></label><div class="subhead"><b>Additional Options</b><button type="button" class="mini add-custom" data-target="__EXP__">+ Add</button></div><div class="custom-list" data-custom="exp"></div></div></template>
 <template id="eduTpl"><div class="repeat"><div class="repeat-title"><b>Education</b><button type="button" class="remove">Remove</button></div><div class="two"><label>Qualification<input class="eq"></label><label>Institution<input class="ei"></label></div><div class="two"><label>Board / University<input class="eb"></label><label>Aggregate<input class="ea"></label></div><div class="two"><label>Stream<input class="es"></label><label>Passing Year<input class="ey"></label></div><div class="subhead"><b>Additional Options</b><button type="button" class="mini add-custom" data-target="__EDU__">+ Add</button></div><div class="custom-list" data-custom="edu"></div></div></template>
-<template id="sectionTpl"><div class="repeat custom-section-editor"><div class="repeat-title"><b>Custom Section</b><button type="button" class="remove">Remove</button></div><label>Section Title<input class="st" placeholder="e.g. References, Publications, Volunteer Work"></label><label>Content<textarea class="sc" rows="3"></textarea></label></div></template>
+<div id="customSections" hidden></div>
 <script src="script.js"></script>
 
 

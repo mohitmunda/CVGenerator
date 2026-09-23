@@ -685,3 +685,57 @@
   html:not(.print-backgrounds) #cv.design-active.design-scope-header .top,
   html:not(.print-backgrounds) #cv.design-active.design-scope-top-band::before{background:transparent!important;background-image:none!important}
 }
+
+/* ===== v15 Declaration sorting fix ===== */
+.cv > #declarationPreview.declaration-sorted-last{
+  margin-top:auto !important;
+}
+.cv > #declarationPreview:not(.declaration-sorted-last){
+  margin-top:14px !important;
+}
+@media print{
+  .cv > #declarationPreview.declaration-sorted-last{
+    margin-top:auto !important;
+  }
+  .cv > #declarationPreview:not(.declaration-sorted-last){
+    margin-top:14px !important;
+  }
+}
+
+/* ===== v15 Reference photo placement ===== */
+.cv.layout-reference .top{
+  grid-template-columns:minmax(0,1fr) 30mm;
+  align-items:start;
+}
+.cv.layout-reference .photo{
+  grid-column:2;
+  grid-row:1;
+  justify-self:end;
+  align-self:start;
+  display:block;
+  object-fit:cover;
+  object-position:center center;
+}
+
+/* ===== v15 Background Design robustness ===== */
+#cv.design-scope-page{
+  background-color:var(--cv-bg-color,#fff) !important;
+  background-image:var(--cv-bg-image,none) !important;
+  background-size:cover !important;
+  background-position:center !important;
+  background-repeat:no-repeat !important;
+}
+#cv.design-scope-header .top{
+  background-color:var(--cv-bg-color,transparent) !important;
+  background-image:var(--cv-bg-image,none) !important;
+  background-size:cover !important;
+  background-position:center !important;
+  background-repeat:no-repeat !important;
+}
+#cv.design-scope-top-band::before{
+  background-color:var(--cv-bg-color,transparent) !important;
+  background-image:var(--cv-bg-image,none) !important;
+  background-size:cover !important;
+  background-position:center !important;
+  background-repeat:no-repeat !important;
+}

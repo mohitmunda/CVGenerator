@@ -110,3 +110,12 @@ Available options:
 - Eight professional theme presets
 - Print/PDF background control
 - Design settings included in CV JSON data
+
+
+## v15 fixes
+- Fixed Background & Design Studio being cleared by live preview updates.
+- Added Declaration to the section organizer; it is last/bottom by default but can now be moved with drag/↑↓.
+- Removed Nationality from Basic Information and placed it directly under Languages Spoken.
+- Improved reference-layout profile photo placement at the top-right.
+- Profile photo is preserved in exported CV JSON data.
+- Removed the visible Custom Section editor.
