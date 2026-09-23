@@ -233,3 +233,101 @@ try{let s=localStorage.getItem('professionalCV');if(s)apply(JSON.parse(s))}catch
   let saved='Arial'; try{saved=localStorage.getItem('cvgen-font-v9')||'Arial'}catch(e){}
   applyFont(saved);
 })();
+
+/* ===== Version 10 clean custom-section engine ===== */
+(function(){
+  const cv=document.querySelector('.cv');
+  if(!cv) return;
+  const q=id=>document.getElementById(id);
+  const list=q('customSections');
+  const add=q('addCustomSection');
+  const preview=q('customPreviewSections');
+
+  function esc(s){
+    return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  }
+
+  function renderCustomPreview(){
+    if(!preview) return;
+    preview.innerHTML='';
+    document.querySelectorAll('.custom-editor-item').forEach(item=>{
+      const title=item.querySelector('.custom-title')?.value?.trim()||'';
+      const content=item.querySelector('.custom-content-input')?.value?.trim()||'';
+      const extra=item.querySelector('.custom-extra-input')?.value?.trim()||'';
+      if(!title && !content && !extra) return;
+      const sec=document.createElement('section');
+      sec.className='custom-preview-section';
+      sec.innerHTML=
+        (title?'<h3 class="section-title">'+esc(title)+'</h3>':'')+
+        (extra?'<div class="custom-subtitle">'+esc(extra)+'</div>':'')+
+        (content?'<div class="custom-content">'+esc(content)+'</div>':'');
+      preview.appendChild(sec);
+    });
+  }
+
+  function addItem(data={}){
+    if(!list) return;
+    const item=document.createElement('div');
+    item.className='custom-editor-item';
+    item.innerHTML=`
+      <div class="custom-row">
+        <input class="custom-title" type="text" placeholder="Section title, e.g. Publications" value="${esc(data.title||'')}">
+        <button type="button" class="custom-delete">Delete</button>
+      </div>
+      <textarea class="custom-content-input" placeholder="Enter the section content...">${esc(data.content||'')}</textarea>
+      <div class="custom-extra">
+        <label>Additional Option</label>
+        <input class="custom-extra-input" type="text" placeholder="Optional subtitle / extra detail" value="${esc(data.extra||'')}">
+      </div>`;
+    list.appendChild(item);
+    item.querySelectorAll('input,textarea').forEach(el=>el.addEventListener('input',renderCustomPreview));
+    item.querySelector('.custom-delete').addEventListener('click',()=>{item.remove();renderCustomPreview();});
+    renderCustomPreview();
+  }
+
+  if(add) add.addEventListener('click',()=>addItem());
+  // Convert any old custom-section rows to the clean renderer only if they use our fields.
+  if(list && !list.children.length){
+    try{
+      const old=JSON.parse(localStorage.getItem('cvgen-custom-sections-v10')||'[]');
+      old.forEach(addItem);
+    }catch(e){}
+  }
+
+  // Career Objective preview.
+  function renderObjective(){
+    const enabled=q('careerObjectiveEnabled');
+    const text=q('careerObjective')?.value?.trim()||'';
+    const extra=q('careerObjectiveAdditional')?.value?.trim()||'';
+    let node=document.getElementById('careerObjectivePreview');
+    if(!node){
+      node=document.createElement('section');
+      node.id='careerObjectivePreview';
+      node.className='career-objective-preview';
+      const target=cv.querySelector('.cv-top')||cv.firstElementChild;
+      target?.insertAdjacentElement('afterend',node);
+    }
+    if(enabled && enabled.checked && (text||extra)){
+      node.innerHTML='<h3 class="section-title">CAREER OBJECTIVE</h3>'+
+        (text?'<div class="objective-text">'+esc(text)+'</div>':'')+
+        (extra?'<div class="objective-extra">'+esc(extra)+'</div>':'');
+      node.style.display='';
+    }else node.style.display='none';
+  }
+  ['careerObjective','careerObjectiveAdditional','careerObjectiveEnabled'].forEach(id=>{
+    const el=q(id); if(el) el.addEventListener('input',renderObjective);
+    if(el) el.addEventListener('change',renderObjective);
+  });
+
+  // Ensure nationality is available to the personal-information renderer.
+  const nationality=q('nationality');
+  if(nationality){
+    nationality.addEventListener('input',()=>{
+      const target=document.querySelector('[data-field="nationality"]');
+      if(target) target.textContent=nationality.value;
+    });
+  }
+
+  renderCustomPreview();
+  renderObjective();
+})();

@@ -64,3 +64,11 @@ These tools work client-side; no CV data is sent to a server by this package.
 Added a larger professional font library and a visual font picker. Choices include Arial, Helvetica, Calibri, Aptos, Inter, Roboto, Open Sans, Lato, Montserrat, Poppins, Raleway, Nunito Sans, Source Sans 3, Merriweather, Georgia, Times New Roman, Garamond, Trebuchet MS, Verdana and Tahoma.
 
 Font selection is stored locally in the browser and can be changed independently of the CV layout.
+
+
+## Version 10 — Layout & Section Fixes
+- Fixed Modern layout page alignment using bounded A4 flex/grid geometry.
+- Fixed Sidebar layout so its accent/sidebar stays inside the printable A4 page.
+- Reworked Custom Sections so only the entered title, content and optional additional detail are rendered in the CV preview; editor controls/text no longer leak into the CV.
+- Added Nationality to Personal Information.
+- Added a dedicated Career Objective section with optional additional detail.

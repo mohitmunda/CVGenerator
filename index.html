@@ -131,7 +131,19 @@ Photography</textarea></label><label>Additional Details<textarea id="skillDetail
     <div id="education"></div>
   </section>
 
-  <section class="panel">
+  
+<section class="editor-section career-objective-editor">
+  <div class="section-editor-head">
+    <h3>Career Objective</h3>
+    <label class="switch"><input type="checkbox" id="careerObjectiveEnabled" checked><span>Show</span></label>
+  </div>
+  <textarea id="careerObjective" rows="4" placeholder="Write a concise career objective..."></textarea>
+  <div class="additional-options">
+    <label for="careerObjectiveAdditional">Additional Option</label>
+    <input id="careerObjectiveAdditional" type="text" placeholder="Optional subtitle / focus area">
+  </div>
+</section>
+<section class="panel">
     <div class="section-head"><div><h2>6. Optional Sections</h2><p>Fill only what you need. Empty sections stay hidden.</p></div><button class="add" id="addCustomSection">+ Add Section</button></div>
     <label>Professional Summary<textarea id="summary" rows="3" placeholder="Short professional summary..."></textarea></label>
     <label>Projects<textarea id="projects" rows="3" placeholder="Project — description — technology"></textarea></label>
@@ -206,7 +218,8 @@ Photography</textarea></label><label>Additional Details<textarea id="skillDetail
         <img id="pPhoto" class="photo rect reference" alt="Profile photo">
       </header>
 
-      <section class="cvsec personal" id="personalSec"><h2><span class="secico" data-icon="user"></span>PERSONAL INFORMATION</h2><div class="personal-grid" id="personalGrid"></div></section>
+      <section class="cvsec personal" id="personalSec"><h2><span class="secico" data-icon="user"></span>PERSONAL INFORMATION</h2><div class="personal-grid" id="personalGrid">
+<div class="personal-item"><span class="label">Nationality</span><span class="colon">:</span><span class="value" data-field="nationality"></span></div></div></section>
       <section class="cvsec" id="skillsSec"><h2><span class="secico" data-icon="skills"></span>SKILLS AND INTERESTS</h2><div class="skills-grid"><div id="pSkills" class="skills"></div><div id="pSkillDetails" class="skill-details"></div></div></section>
       <section class="cvsec" id="experienceSec"><h2><span class="secico" data-icon="briefcase"></span>EXPERIENCE</h2><div id="pExperience"></div></section>
       <section class="cvsec" id="educationSec"><h2><span class="secico" data-icon="education"></span>EDUCATIONAL DETAILS</h2><div id="pEducation"></div></section>
@@ -216,7 +229,8 @@ Photography</textarea></label><label>Additional Details<textarea id="skillDetail
       <section class="cvsec extra" id="achievementsSec"><h2><span class="secico" data-icon="award"></span>ACHIEVEMENTS</h2><div id="pAchievements"></div></section>
       <section class="cvsec extra" id="hobbiesSec"><h2><span class="secico" data-icon="heart"></span>HOBBIES & INTERESTS</h2><div id="pHobbies"></div></section>
       <div id="pCustomSections"></div>
-    </article>
+    <div id="customPreviewSections" class="custom-preview-sections"></div>
+</article>
   </div>
 </section>
 </main>

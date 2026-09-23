@@ -141,3 +141,182 @@
 .cv.font-trebuchet-ms{font-family:"Trebuchet MS",Arial,sans-serif}
 @media(max-width:700px){.font-cards{grid-template-columns:repeat(2,minmax(120px,1fr))}}
 @media print{.font-gallery{display:none!important}}
+
+/* ===== Version 10: Layout + Custom Section Fixes ===== */
+
+/* Robust A4 page geometry for all layouts */
+.cv{
+  box-sizing:border-box;
+  width:210mm;
+  min-height:297mm;
+  max-width:210mm;
+  margin:0 auto;
+  overflow:hidden;
+  position:relative;
+}
+.cv *, .cv *:before, .cv *:after{box-sizing:border-box}
+
+/* Modern: use flex columns instead of grid so content cannot escape the page */
+.cv.layout-modern{
+  display:flex !important;
+  flex-direction:column;
+  width:210mm;
+  min-height:297mm;
+}
+.cv.layout-modern .cv-top{
+  width:100%;
+  flex:0 0 auto;
+}
+.cv.layout-modern .cv-body{
+  display:grid;
+  grid-template-columns:minmax(0,34%) minmax(0,66%);
+  width:100%;
+  min-width:0;
+  flex:1 1 auto;
+}
+.cv.layout-modern .cv-left,
+.cv.layout-modern .cv-right{
+  min-width:0;
+  overflow-wrap:anywhere;
+}
+.cv.layout-modern .cv-left{padding:18px;background:#f3f5f7}
+.cv.layout-modern .cv-right{padding:18px}
+
+/* Sidebar: fixed inner column and no negative/overflowing positioning */
+.cv.layout-sidebar{
+  width:210mm;
+  min-height:297mm;
+  padding-right:0 !important;
+}
+.cv.layout-sidebar .cv-top{
+  width:100%;
+  padding-right:95px;
+}
+.cv.layout-sidebar .cv-sidebar-accent{
+  position:absolute;
+  right:0;
+  top:0;
+  width:25mm;
+  height:100%;
+  display:block;
+}
+.cv.layout-sidebar .cv-sidebar-accent *{max-width:100%}
+
+/* Executive and all layouts keep long text inside printable width */
+.cv.layout-executive,
+.cv.layout-classic,
+.cv.layout-reference,
+.cv.layout-minimal,
+.cv.layout-elegant,
+.cv.layout-corporate{
+  overflow:hidden;
+}
+.cv p,.cv li,.cv td,.cv div{overflow-wrap:anywhere}
+
+/* Custom sections: only clean rendered content */
+.custom-preview-sections{
+  width:100%;
+  min-width:0;
+  margin-top:10px;
+}
+.custom-preview-section{
+  margin-top:10px;
+  min-width:0;
+  page-break-inside:avoid;
+}
+.custom-preview-section .section-title{
+  margin-bottom:5px;
+}
+.custom-preview-section .custom-content{
+  white-space:pre-line;
+  overflow-wrap:anywhere;
+}
+.custom-preview-section .custom-subtitle{
+  font-size:.82em;
+  color:#667085;
+  margin:0 0 4px;
+}
+.custom-sections-list{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.custom-editor-item{
+  border:1px solid #dfe4ea;
+  border-radius:10px;
+  padding:10px;
+  background:#fafbfc;
+}
+.custom-editor-item .custom-row{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:8px;
+  align-items:center;
+}
+.custom-editor-item input,
+.custom-editor-item textarea{
+  width:100%;
+  border:1px solid #d0d5dd;
+  border-radius:7px;
+  padding:8px;
+  background:#fff;
+  font:inherit;
+}
+.custom-editor-item textarea{min-height:70px;resize:vertical}
+.custom-editor-item .custom-delete{
+  border:1px solid #d92d20;
+  color:#b42318;
+  background:#fff;
+  border-radius:7px;
+  padding:7px 9px;
+  cursor:pointer;
+}
+.custom-editor-item .custom-extra{
+  margin-top:7px;
+}
+.custom-editor-item .custom-extra label{
+  display:block;font-size:11px;color:#475467;margin-bottom:3px;
+}
+
+/* Hide editor-only artifacts from CV preview */
+.cv .editor-section,
+.cv .field,
+.cv .additional-options,
+.cv .hint,
+.cv button,
+.cv input,
+.cv textarea,
+.cv select,
+.cv .drag-handle,
+.cv .section-controls{
+  display:none !important;
+}
+
+/* Nationality follows the personal information grid */
+.personal-grid .nationality,
+.personal-grid #nationality{min-width:0}
+
+/* Career objective */
+.cv .career-objective-preview{
+  margin-top:10px;
+  page-break-inside:avoid;
+}
+.cv .career-objective-preview .objective-text{
+  white-space:pre-line;
+  overflow-wrap:anywhere;
+}
+.cv .career-objective-preview .objective-extra{
+  margin-top:4px;
+  font-size:.84em;
+  color:#667085;
+}
+
+/* Responsive editor */
+@media(max-width:850px){
+  .cv{transform-origin:top left}
+  .cv.layout-modern .cv-body{grid-template-columns:1fr}
+}
+@media print{
+  .cv.layout-modern .cv-body{display:grid!important;grid-template-columns:34% 66%!important}
+  .cv.layout-modern .cv-left,.cv.layout-modern .cv-right{padding:12px}
+}
