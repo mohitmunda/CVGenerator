@@ -1,32 +1,66 @@
-# CV Generator v3 — Exact Reference Layout
+# Professional CV Generator — v6
 
-This version is designed specifically to reproduce the supplied CV image's A4 layout:
-- Name at upper left
-- Address / phone / email block
-- Profile photo at upper right
-- Thin horizontal separators
-- Three-column personal-information rows
-- Compact skills list
-- Experience section
-- Education section with the same hierarchy and indentation
-- A4 portrait dimensions and print rules
+A browser-based A4 CV/resume generator designed around a clean professional reference layout, with multiple layouts, icons, custom fields, live preview and PDF printing.
 
-The default mode is **Exact Reference Layout**. Additional fields are available but do not appear unless the user switches to **Extended Sections**.
+## What's new in v6
 
-Profile photo options:
-- Rectangular
-- Rounded rectangle
-- Circular
-- Reference / small / large sizes
+- **Section arranger:** drag sections into any order or use the ↑ / ↓ controls.
+- Section order is saved in the CV JSON and browser local storage.
+- **Reset Order** returns to the reference order.
+- Custom sections can also be arranged.
+- Existing professional SVG icons and multiple layout options are retained.
+- Additional options remain available inside individual sections, experience entries and education entries.
 
-Run by opening `index.html`. For PDF choose Print → A4 → Save as PDF.
+## Default section order
+
+1. Personal Information
+2. Skills & Interests
+3. Experience
+4. Educational Details
+5. Professional Summary
+6. Projects
+7. Certifications & Training
+8. Achievements
+9. Hobbies & Interests
+
+The default layout remains the reference-style A4 design.
+
+## Run
+
+No server or build process is required. Open `index.html` in a modern browser.
+
+For GitHub Pages, upload the files to a repository and enable Pages for the repository branch/folder containing `index.html`.
+
+## Data privacy
+
+The included demo information is fictional. Replace it with your own information locally. Do not commit private CV data, photos, phone numbers, email addresses or other sensitive information to a public repository.
+
+## License
+
+See `LICENSE`.
 
 
-## GitHub / Public Repository Safety
+## Version 7 — Professional Layouts
+The generator now includes 8 selectable layouts. **Reference Pro** is the default and is designed to stay closest to the supplied reference CV while giving it a more polished professional finish. Other layouts include Classic, Modern Two Column, Executive Split, Professional Sidebar, Minimal Clean, Elegant Editorial, and Corporate ATS.
 
-The pre-filled fields contain **fictional demonstration data only**. They are intentionally not tied to a real person.
+The layout can be changed from the layout selector or the visual layout gallery. The selected layout is remembered in the browser.
 
-Before publishing:
-- Replace the demo data with your own examples if desired.
-- Do not commit real phone numbers, personal email addresses, home addresses, identity documents, or private photographs.
-- The application runs entirely in the browser; no personal data is sent to a server by the included code.
+
+## Version 8 — Professional Tools
+Added an optional professional tools panel with:
+- A4 auto-fit/compact controls
+- Draft watermark
+- Page numbers
+- Print background preference
+- Browser-saved settings
+- CV duplication in local browser storage
+- Standalone HTML export
+- Privacy checklist for public GitHub demos
+
+These tools work client-side; no CV data is sent to a server by this package.
+
+
+## Version 9 — Expanded Fonts
+Added a larger professional font library and a visual font picker. Choices include Arial, Helvetica, Calibri, Aptos, Inter, Roboto, Open Sans, Lato, Montserrat, Poppins, Raleway, Nunito Sans, Source Sans 3, Merriweather, Georgia, Times New Roman, Garamond, Trebuchet MS, Verdana and Tahoma.
+
+Font selection is stored locally in the browser and can be changed independently of the CV layout.

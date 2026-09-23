@@ -3,53 +3,106 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Exact Reference CV Generator</title>
+<title>Professional CV Generator</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <header class="appbar">
-  <div><h1>CV Generator</h1><p>Exact reference-layout mode • A4 portrait</p></div>
-  <div class="actions">
-    <button id="save">Save Data</button><button id="load">Load Data</button>
-    <button class="primary" id="print">Generate / Print CV</button>
-  </div>
+  <div class="brand"><div class="brand-mark">CV</div><div><h1>Professional CV Generator</h1><p>Reference-first A4 resume builder • live preview • print to PDF</p></div></div>
+  <div class="actions"><button id="save">Save Data</button><button id="load">Load Data</button><button class="primary" id="print">Generate / Print CV</button></div>
 </header>
 
 <main>
+
+<section class="font-gallery" aria-label="Font choices">
+  <h3>Font Preview</h3>
+  <div class="font-cards">
+    <button type="button" data-font-card="Arial"><strong>Arial</strong><small>Clean & universal</small></button>
+    <button type="button" data-font-card="Aptos"><strong>Aptos</strong><small>Modern office</small></button>
+    <button type="button" data-font-card="Inter"><strong>Inter</strong><small>Modern UI</small></button>
+    <button type="button" data-font-card="Roboto"><strong>Roboto</strong><small>Contemporary</small></button>
+    <button type="button" data-font-card="Open Sans"><strong>Open Sans</strong><small>Readable</small></button>
+    <button type="button" data-font-card="Lato"><strong>Lato</strong><small>Professional</small></button>
+    <button type="button" data-font-card="Montserrat"><strong>Montserrat</strong><small>Strong headings</small></button>
+    <button type="button" data-font-card="Poppins"><strong>Poppins</strong><small>Modern profile</small></button>
+    <button type="button" data-font-card="Raleway"><strong>Raleway</strong><small>Elegant</small></button>
+    <button type="button" data-font-card="Nunito Sans"><strong>Nunito Sans</strong><small>Friendly</small></button>
+    <button type="button" data-font-card="Source Sans 3"><strong>Source Sans 3</strong><small>Compact</small></button>
+    <button type="button" data-font-card="Merriweather"><strong>Merriweather</strong><small>Editorial</small></button>
+    <button type="button" data-font-card="Georgia"><strong>Georgia</strong><small>Classic serif</small></button>
+    <button type="button" data-font-card="Garamond"><strong>Garamond</strong><small>Traditional</small></button>
+    <button type="button" data-font-card="Times New Roman"><strong>Times New Roman</strong><small>Formal serif</small></button>
+    <button type="button" data-font-card="Trebuchet MS"><strong>Trebuchet MS</strong><small>Humanist</small></button>
+  </div>
+</section>
+
+<section class="layout-gallery" aria-label="CV layout choices">
+  <h3>Professional Layouts</h3>
+  <div class="layout-cards">
+    <button type="button" class="layout-card active" data-layout-card="reference">
+      <span class="mini-paper ref-paper"><i></i><b></b><em></em><u></u></span>
+      <strong>Reference Pro</strong><small>Default</small>
+    </button>
+    <button type="button" class="layout-card" data-layout-card="classic">
+      <span class="mini-paper classic-paper"><i></i><b></b><em></em><u></u></span>
+      <strong>Classic</strong><small>Traditional</small>
+    </button>
+    <button type="button" class="layout-card" data-layout-card="modern">
+      <span class="mini-paper modern-paper"><i></i><b></b><em></em><u></u></span>
+      <strong>Modern</strong><small>Two column</small>
+    </button>
+    <button type="button" class="layout-card" data-layout-card="executive">
+      <span class="mini-paper executive-paper"><i></i><b></b><em></em><u></u></span>
+      <strong>Executive</strong><small>Split header</small>
+    </button>
+    <button type="button" class="layout-card" data-layout-card="sidebar">
+      <span class="mini-paper sidebar-paper"><i></i><b></b><em></em><u></u></span>
+      <strong>Sidebar</strong><small>Strong profile</small>
+    </button>
+    <button type="button" class="layout-card" data-layout-card="minimal">
+      <span class="mini-paper minimal-paper"><i></i><b></b><em></em><u></u></span>
+      <strong>Minimal</strong><small>Clean</small>
+    </button>
+    <button type="button" class="layout-card" data-layout-card="elegant">
+      <span class="mini-paper elegant-paper"><i></i><b></b><em></em><u></u></span>
+      <strong>Editorial</strong><small>Elegant</small>
+    </button>
+    <button type="button" class="layout-card" data-layout-card="corporate">
+      <span class="mini-paper corporate-paper"><i></i><b></b><em></em><u></u></span>
+      <strong>Corporate</strong><small>ATS friendly</small>
+    </button>
+  </div>
+</section>
+
 <aside class="editor">
   <section class="panel">
-    <div class="demo-note"><b>Demo data:</b> The pre-filled information is fictional example content for GitHub/public demos. Replace it with your own details.</div>
-    <h2>Basic Information</h2>
-    <div class="two">
-      <label>Full Name<input id="name" value="ALEX JOHNSON"></label>
-      <label>Profile Photo<input id="photo" type="file" accept="image/*"></label>
-    </div>
+    <div class="demo-note"><b>GitHub-safe demo:</b> all pre-filled information is fictional. Replace it with your own details. No real personal information is included.</div>
+    <h2>1. Basic Information</h2>
+    <div class="two"><label>Full Name<input id="name" value="ALEX JOHNSON"></label><label>Profile Photo<input id="photo" type="file" accept="image/*"></label></div>
     <label>Address<textarea id="address" rows="3">123 Main Street, Green Park,
 Springfield, State
 PIN-123456</textarea></label>
-    <div class="two">
-      <label>Phone<input id="phone" placeholder="+91 XXXXX XXXXX"></label>
-      <label>Email<input id="email" placeholder="your@email.com"></label>
-    </div>
+    <div class="two"><label>Phone<input id="phone" value="+91 98765 43210"></label><label>Email<input id="email" value="alex.johnson@example.com"></label></div>
+    <div class="two"><label>Website<input id="website" placeholder="https://example.com"></label><label>LinkedIn<input id="linkedin" placeholder="linkedin.com/in/username"></label></div>
+    <div class="two"><label>GitHub<input id="github" placeholder="github.com/username"></label><label>Location<input id="location" placeholder="City, State, Country"></label></div>
+    <div class="two"><label>Nationality<input id="nationality" value="INDIAN"></label><label>Professional Title<input id="title" value="WEB DESIGNER & DEVELOPER"></label></div>
+    <div class="custom-box"><div class="subhead"><b>Additional Basic Details</b><button type="button" class="mini add-custom" data-target="basicCustom">+ Add</button></div><div id="basicCustom"></div></div>
   </section>
 
   <section class="panel">
-    <h2>Personal Information</h2>
+    <h2>2. Personal Information</h2>
     <div class="two">
-      <label>Date of Birth<input id="dob" value="15-08-1998"></label>
-      <label>Age<input id="age" value="28 Years"></label>
-      <label>Father's Name<input id="father" value="ROBERT JOHNSON"></label>
-      <label>Mother's Name<input id="mother" value="MARY JOHNSON"></label>
-      <label>Gender<input id="gender" value="MALE"></label>
-      <label>Marital Status<input id="marital" value="SINGLE"></label>
+      <label>Date of Birth<input id="dob" value="15-08-1998"></label><label>Age<input id="age" value="28 Years"></label>
+      <label>Father's Name<input id="father" value="ROBERT JOHNSON"></label><label>Mother's Name<input id="mother" value="MARY JOHNSON"></label>
+      <label>Gender<input id="gender" value="MALE"></label><label>Marital Status<input id="marital" value="SINGLE"></label>
       <label>Languages Spoken<input id="languages" value="ENGLISH, HINDI"></label>
     </div>
+    <div class="custom-box"><div class="subhead"><b>Additional Personal Options</b><button type="button" class="mini add-custom" data-target="personalCustom">+ Add</button></div><div id="personalCustom"></div></div>
   </section>
 
   <section class="panel">
-    <h2>Skills & Interests</h2>
-    <p>One item per line. The spacing is automatically matched to the reference.</p>
-    <textarea id="skills" rows="17">Web Designing
+    <h2>3. Skills & Interests</h2><p>One item per line. In the reference layout, the right side is available for additional details.</p>
+    <div class="two"><label>Skills & Interests<textarea id="skills" rows="13">Web Designing
 Website Management
 WordPress
 HTML, HTML5
@@ -64,106 +117,144 @@ Team Work Skills
 Effective Communication
 Problem Solving
 Teaching
-Photography</textarea>
+Photography</textarea></label><label>Additional Details<textarea id="skillDetails" rows="13" placeholder="Example:\n• Technical strengths\n• Tools & software\n• Areas of interest\n• Soft skills\n• Availability"></textarea></label></div>
+    <div class="custom-box"><div class="subhead"><b>Additional Skill Options</b><button type="button" class="mini add-custom" data-target="skillCustom">+ Add</button></div><div id="skillCustom"></div></div>
   </section>
 
   <section class="panel">
-    <h2>Experience</h2>
+    <div class="section-head"><div><h2>4. Experience</h2><p>Add as many positions as needed.</p></div><button class="add" id="addExperience">+ Add Experience</button></div>
     <div id="experience"></div>
-    <button class="add" id="addExperience">+ Add Experience</button>
   </section>
 
   <section class="panel">
-    <h2>Educational Details</h2>
+    <div class="section-head"><div><h2>5. Educational Details</h2><p>Use the extra rows for GPA, subjects, achievements, etc.</p></div><button class="add" id="addEducation">+ Add Education</button></div>
     <div id="education"></div>
-    <button class="add" id="addEducation">+ Add Education</button>
   </section>
 
   <section class="panel">
-    <h2>Additional Options</h2>
-    <p>These are available when you need them. The default CV remains in the exact reference layout.</p>
-    <label>Optional Professional Summary<textarea id="summary" rows="3" placeholder="Leave blank to keep the exact reference structure"></textarea></label>
-    <label>Optional Projects<textarea id="projects" rows="3" placeholder="Project name — description"></textarea></label>
-    <label>Optional Certifications<textarea id="certs" rows="3" placeholder="Certificate — Issuer — Year"></textarea></label>
-    <label>Optional Achievements<textarea id="achievements" rows="3" placeholder="One per line"></textarea></label>
-    <label>Optional Hobbies<textarea id="hobbies" rows="2" placeholder="One per line"></textarea></label>
+    <div class="section-head"><div><h2>6. Optional Sections</h2><p>Fill only what you need. Empty sections stay hidden.</p></div><button class="add" id="addCustomSection">+ Add Section</button></div>
+    <label>Professional Summary<textarea id="summary" rows="3" placeholder="Short professional summary..."></textarea></label>
+    <label>Projects<textarea id="projects" rows="3" placeholder="Project — description — technology"></textarea></label>
+    <label>Certifications & Training<textarea id="certs" rows="3" placeholder="Certificate — Issuer — Year"></textarea></label>
+    <label>Achievements<textarea id="achievements" rows="3" placeholder="One per line"></textarea></label>
+    <label>Hobbies & Interests<textarea id="hobbies" rows="2" placeholder="One per line"></textarea></label>
+    <div id="customSections"></div>
   </section>
 
   <section class="panel">
-    <h2>Photo & Print Settings</h2>
+    <div class="section-head"><div><h2>7. Arrange CV Sections</h2><p>Drag sections or use the ↑ ↓ buttons to change their order. The order is saved with your CV data.</p></div><button class="add" type="button" id="resetOrder">Reset Order</button></div>
+    <div id="sectionOrder" class="section-order"></div>
+  </section>
+
+  <section class="panel">
+    <h2>8. Layout & Design</h2>
     <div class="two">
+      <label>Layout<select id="layout" name="layout" class="layout-select">
+<option value="reference">Reference Pro — Default</option>
+<option value="classic">Classic Professional</option>
+<option value="modern">Modern Two Column</option>
+<option value="executive">Executive Split</option>
+<option value="sidebar">Professional Sidebar</option>
+<option value="minimal">Minimal Clean</option>
+<option value="elegant">Elegant Editorial</option>
+<option value="corporate">Corporate ATS</option>
+</select></label>
+      <label>Font<select id="font" name="font" class="font-select">
+<option value="Arial">Arial</option>
+<option value="Helvetica">Helvetica</option>
+<option value="Calibri">Calibri</option>
+<option value="Aptos">Aptos</option>
+<option value="Inter">Inter</option>
+<option value="Roboto">Roboto</option>
+<option value="Open Sans">Open Sans</option>
+<option value="Lato">Lato</option>
+<option value="Montserrat">Montserrat</option>
+<option value="Poppins">Poppins</option>
+<option value="Raleway">Raleway</option>
+<option value="Nunito Sans">Nunito Sans</option>
+<option value="Source Sans 3">Source Sans 3</option>
+<option value="Merriweather">Merriweather</option>
+<option value="Georgia">Georgia</option>
+<option value="Times New Roman">Times New Roman</option>
+<option value="Garamond">Garamond</option>
+<option value="Trebuchet MS">Trebuchet MS</option>
+<option value="Verdana">Verdana</option>
+<option value="Tahoma">Tahoma</option>
+</select></label>
+      <label>Accent<select id="accent"><option value="#111111">Black</option><option value="#1f4b99">Professional Blue</option><option value="#1f6b5c">Forest Green</option><option value="#6b3fa0">Plum</option><option value="#9a5b13">Warm Bronze</option></select></label>
       <label>Photo Shape<select id="shape"><option value="rect">Rectangular</option><option value="rounded">Rounded Rectangle</option><option value="circle">Circular</option></select></label>
       <label>Photo Size<select id="photoSize"><option value="reference">Reference</option><option value="small">Small</option><option value="large">Large</option></select></label>
+      <label>Section Icons<select id="iconStyle"><option value="line">Professional Line Icons</option><option value="solid">Bold Icons</option><option value="none">No Icons</option></select></label>
     </div>
-    <div class="two">
-      <label>CV Font<select id="font"><option value="Arial">Arial</option><option value="Helvetica">Helvetica</option><option value="Calibri">Calibri</option></select></label>
-      <label>Exact Layout<select id="mode"><option value="exact">Exact Reference Layout</option><option value="extended">Extended Sections</option></select></label>
-    </div>
-    <label class="check"><input id="hidePhoto" type="checkbox"> Hide photo</label>
+    <div class="check-row"><label class="check"><input id="hidePhoto" type="checkbox"> Hide photo</label><label class="check"><input id="compact" type="checkbox"> Compact spacing</label></div>
+    <p class="print-note">Default is the black-and-white A4 layout based on your uploaded reference. Other layouts and colors are optional.</p>
   </section>
 </aside>
 
 <section class="preview">
   <div class="preview-head"><b>Live Preview</b><span>A4 • 210 × 297 mm</span></div>
   <div class="sheet-wrap">
-    <article id="cv" class="cv">
+    <article id="cv" class="cv layout-reference">
       <header class="top">
         <div class="contact">
-          <h1 id="pName">MOHIT MUNDA</h1>
-          <div class="line address"><i class="ico">●</i><span id="pAddress"></span></div>
-          <div class="line" id="phoneRow"><i class="ico">◒</i><b>Phone:</b><span id="pPhone">-</span></div>
-          <div class="line" id="emailRow"><i class="ico">✉</i><b>Email:</b><span id="pEmail">-</span></div>
+          <h1 id="pName">ALEX JOHNSON</h1>
+          <div class="line address" id="addressRow"><span class="svgico" data-icon="location"></span><span id="pAddress"></span></div>
+          <div class="line" id="phoneRow"><span class="svgico" data-icon="phone"></span><b>Phone:</b><span id="pPhone">-</span></div>
+          <div class="line" id="emailRow"><span class="svgico" data-icon="mail"></span><b>Email:</b><span id="pEmail">-</span></div>
+          <div class="contact-links" id="contactLinks"></div>
         </div>
-        <img id="pPhoto" class="photo rect" alt="">
+        <img id="pPhoto" class="photo rect reference" alt="Profile photo">
       </header>
 
-      <section class="cvsec personal">
-        <h2><span class="secico">▣</span>PERSONAL INFORMATION</h2>
-        <div class="personal-grid" id="personalGrid"></div>
-      </section>
-
-      <section class="cvsec" id="skillsSec">
-        <h2><span class="secico">◎</span>SKILLS AND INTERESTS</h2>
-        <div id="pSkills" class="skills"></div>
-      </section>
-
-      <section class="cvsec" id="experienceSec">
-        <h2><span class="secico">♙</span>EXPERIENCE</h2>
-        <div id="pExperience"></div>
-      </section>
-
-      <section class="cvsec" id="educationSec">
-        <h2><span class="secico">◆</span>EDUCATIONAL DETAILS</h2>
-        <div id="pEducation"></div>
-      </section>
-
-      <section class="cvsec extra" id="summarySec"><h2><span class="secico">✦</span>PROFESSIONAL SUMMARY</h2><div id="pSummary"></div></section>
-      <section class="cvsec extra" id="projectsSec"><h2><span class="secico">◈</span>PROJECTS</h2><div id="pProjects"></div></section>
-      <section class="cvsec extra" id="certsSec"><h2><span class="secico">✪</span>CERTIFICATIONS & TRAINING</h2><div id="pCerts"></div></section>
-      <section class="cvsec extra" id="achievementsSec"><h2><span class="secico">★</span>ACHIEVEMENTS</h2><div id="pAchievements"></div></section>
-      <section class="cvsec extra" id="hobbiesSec"><h2><span class="secico">♡</span>HOBBIES & INTERESTS</h2><div id="pHobbies"></div></section>
+      <section class="cvsec personal" id="personalSec"><h2><span class="secico" data-icon="user"></span>PERSONAL INFORMATION</h2><div class="personal-grid" id="personalGrid"></div></section>
+      <section class="cvsec" id="skillsSec"><h2><span class="secico" data-icon="skills"></span>SKILLS AND INTERESTS</h2><div class="skills-grid"><div id="pSkills" class="skills"></div><div id="pSkillDetails" class="skill-details"></div></div></section>
+      <section class="cvsec" id="experienceSec"><h2><span class="secico" data-icon="briefcase"></span>EXPERIENCE</h2><div id="pExperience"></div></section>
+      <section class="cvsec" id="educationSec"><h2><span class="secico" data-icon="education"></span>EDUCATIONAL DETAILS</h2><div id="pEducation"></div></section>
+      <section class="cvsec extra" id="summarySec"><h2><span class="secico" data-icon="summary"></span>PROFESSIONAL SUMMARY</h2><div id="pSummary"></div></section>
+      <section class="cvsec extra" id="projectsSec"><h2><span class="secico" data-icon="project"></span>PROJECTS</h2><div id="pProjects"></div></section>
+      <section class="cvsec extra" id="certsSec"><h2><span class="secico" data-icon="certificate"></span>CERTIFICATIONS & TRAINING</h2><div id="pCerts"></div></section>
+      <section class="cvsec extra" id="achievementsSec"><h2><span class="secico" data-icon="award"></span>ACHIEVEMENTS</h2><div id="pAchievements"></div></section>
+      <section class="cvsec extra" id="hobbiesSec"><h2><span class="secico" data-icon="heart"></span>HOBBIES & INTERESTS</h2><div id="pHobbies"></div></section>
+      <div id="pCustomSections"></div>
     </article>
   </div>
 </section>
 </main>
 
-<template id="expTpl">
-<div class="repeat">
-  <div class="repeat-title"><b>Experience</b><button type="button" class="remove">Remove</button></div>
-  <div class="two"><label>Job / Role<input class="et"></label><label>Company<input class="ec"></label></div>
-  <label>Duration<input class="ed"></label>
-  <label>Description<textarea class="ex" rows="2"></textarea></label>
-</div>
-</template>
-
-<template id="eduTpl">
-<div class="repeat">
-  <div class="repeat-title"><b>Education</b><button type="button" class="remove">Remove</button></div>
-  <div class="two"><label>Qualification<input class="eq"></label><label>Institution<input class="ei"></label></div>
-  <div class="two"><label>Board / University<input class="eb"></label><label>Aggregate<input class="ea"></label></div>
-  <div class="two"><label>Stream<input class="es"></label><label>Passing Year<input class="ey"></label></div>
-</div>
-</template>
+<template id="customTpl"><div class="custom-row"><input class="cl" placeholder="Label"><input class="cvv" placeholder="Value"><button type="button" class="remove">×</button></div></template>
+<template id="expTpl"><div class="repeat"><div class="repeat-title"><b>Experience</b><button type="button" class="remove">Remove</button></div><div class="two"><label>Job / Role<input class="et"></label><label>Company<input class="ec"></label></div><label>Duration<input class="ed"></label><label>Description<textarea class="ex" rows="2"></textarea></label><div class="subhead"><b>Additional Options</b><button type="button" class="mini add-custom" data-target="__EXP__">+ Add</button></div><div class="custom-list" data-custom="exp"></div></div></template>
+<template id="eduTpl"><div class="repeat"><div class="repeat-title"><b>Education</b><button type="button" class="remove">Remove</button></div><div class="two"><label>Qualification<input class="eq"></label><label>Institution<input class="ei"></label></div><div class="two"><label>Board / University<input class="eb"></label><label>Aggregate<input class="ea"></label></div><div class="two"><label>Stream<input class="es"></label><label>Passing Year<input class="ey"></label></div><div class="subhead"><b>Additional Options</b><button type="button" class="mini add-custom" data-target="__EDU__">+ Add</button></div><div class="custom-list" data-custom="edu"></div></div></template>
+<template id="sectionTpl"><div class="repeat custom-section-editor"><div class="repeat-title"><b>Custom Section</b><button type="button" class="remove">Remove</button></div><label>Section Title<input class="st" placeholder="e.g. References, Publications, Volunteer Work"></label><label>Content<textarea class="sc" rows="3"></textarea></label></div></template>
 <script src="script.js"></script>
+
+<section class="pro-tools" id="proTools">
+  <div class="pro-tools-head">
+    <div>
+      <h3>Professional Tools</h3>
+      <p>Fine-tune your CV before exporting.</p>
+    </div>
+    <button type="button" id="toggleTools">Hide</button>
+  </div>
+  <div class="pro-tools-grid" id="proToolsBody">
+    <label><input type="checkbox" id="autoFit" checked> Auto-fit content to A4</label>
+    <label><input type="checkbox" id="showPageNumbers"> Page numbers</label>
+    <label><input type="checkbox" id="showWatermark"> Draft watermark</label>
+    <label><input type="checkbox" id="spellAssist" checked> Basic spelling hints</label>
+    <label><input type="checkbox" id="printBackground" checked> Print background graphics</label>
+    <label><input type="checkbox" id="compactMode"> Extra compact spacing</label>
+    <label><input type="checkbox" id="showQR"> QR code for contact/portfolio</label>
+    <label><input type="checkbox" id="showLastUpdated"> Show “Last updated”</label>
+  </div>
+  <div class="pro-actions">
+    <button type="button" id="duplicateCV">Duplicate current CV</button>
+    <button type="button" id="clearDraft">Clear saved draft</button>
+    <button type="button" id="exportHTML">Export standalone HTML</button>
+  </div>
+</section>
+
+<section class="privacy-note">
+  <strong>Privacy check:</strong> Before publishing to GitHub, keep real phone numbers, email addresses, home addresses, dates of birth and personal photos out of demo data.
+</section>
+
 </body>
 </html>
