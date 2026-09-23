@@ -115,13 +115,13 @@ function update(){
  const pc=$('pCustomSections');pc.innerHTML='';document.querySelectorAll('#customSections .custom-section-editor').forEach(r=>{let t=node(r,'.st'),c=node(r,'.sc');if(!t&&!c)return;let s=document.createElement('section');s.className='custom-cv-section';s.dataset.orderKey=r.dataset.orderKey;s.innerHTML=`<h2><span class="secico">${svgIcon('summary')}</span>${esc((t||'ADDITIONAL SECTION').toUpperCase())}</h2><div class="custom-content">${esc(c)}</div>`;r.__preview=s;pc.appendChild(s)});
  const cv=$('cv');cv.className='cv layout-'+(v('layout')||'reference');cv.classList.toggle('compact',$('compact').checked);cv.style.fontFamily=v('font')+',Arial,sans-serif';cv.style.setProperty('--accent',v('accent')||'#111');cv.classList.toggle('extended',v('layout')!=='reference'||!!(v('summary')||v('projects')||v('certs')||v('achievements')||v('hobbies')));
  renderDeclarationForUpdate();
- $('pPhoto').className='photo '+v('shape')+' '+v('photoSize');$('pPhoto').style.display=$('hidePhoto').checked?'none':'block';updateIcons();renderSectionOrder();applySectionOrder();if(window.__cvApplyDesign)window.__cvApplyDesign();if(window.__cvV18Refresh)window.__cvV18Refresh();saveLocal();
+ $('pPhoto').className='photo '+v('shape')+' '+v('photoSize');$('pPhoto').style.display=$('hidePhoto').checked?'none':'block';updateIcons();renderSectionOrder();applySectionOrder();saveLocal();if(window.__cvV19Refresh)setTimeout(window.__cvV19Refresh,0);
 }
 $('photo').onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{$('pPhoto').src=r.result;update()};r.readAsDataURL(f)};
 document.addEventListener('input',e=>{if(e.target.matches('input,textarea,select'))update()});document.addEventListener('change',e=>{if(e.target.matches('input,textarea,select'))update()});
-function data(){return {name:v('name'),address:v('address'),phone:v('phone'),email:v('email'),website:v('website'),linkedin:v('linkedin'),github:v('github'),location:v('location'),nationality:v('nationality'),title:v('title'),dob:v('dob'),age:v('age'),father:v('father'),mother:v('mother'),gender:v('gender'),marital:v('marital'),languages:v('languages'),skills:v('skills'),skillDetails:v('skillDetails'),summary:v('summary'),projects:v('projects'),certs:v('certs'),achievements:v('achievements'),hobbies:v('hobbies'),careerObjective:v('careerObjective'),careerObjectiveAdditional:v('careerObjectiveAdditional'),careerObjectiveEnabled:$('careerObjectiveEnabled')?.checked!==false,declarationEnabled:$('declarationEnabled')?.checked!==false,declarationText:v('declarationText'),declarationPlace:v('declarationPlace'),declarationDate:v('declarationDate'),declarationSignature:v('declarationSignature'),layout:v('layout'),accent:v('accent'),shape:v('shape'),photoSize:v('photoSize'),font:v('font'),iconStyle:v('iconStyle'),compact:$('compact').checked,hidePhoto:$('hidePhoto').checked,basicCustom:readCustom($('basicCustom')),personalCustom:readCustom($('personalCustom')),skillCustom:readCustom($('skillCustom')),exp:[...document.querySelectorAll('#experience .repeat')].map(r=>({t:node(r,'.et'),c:node(r,'.ec'),d:node(r,'.ed'),ex:node(r,'.ex'),custom:readCustom(r.querySelector('.custom-list'))})),edu:[...document.querySelectorAll('#education .repeat')].map(r=>({q:node(r,'.eq'),i:node(r,'.ei'),b:node(r,'.eb'),a:node(r,'.ea'),s:node(r,'.es'),y:node(r,'.ey'),custom:readCustom(r.querySelector('.custom-list'))})),customSections:[...document.querySelectorAll('#customSections .custom-section-editor')].map(r=>({key:r.dataset.orderKey,t:node(r,'.st'),c:node(r,'.sc')})),sectionOrder:sectionOrder.slice(),design:window.__cvDesignGetState?window.__cvDesignGetState():null}}
+function data(){return {name:v('name'),address:v('address'),phone:v('phone'),email:v('email'),website:v('website'),linkedin:v('linkedin'),github:v('github'),location:v('location'),nationality:v('nationality'),title:v('title'),dob:v('dob'),age:v('age'),father:v('father'),mother:v('mother'),gender:v('gender'),marital:v('marital'),languages:v('languages'),skills:v('skills'),skillDetails:v('skillDetails'),summary:v('summary'),projects:v('projects'),certs:v('certs'),achievements:v('achievements'),hobbies:v('hobbies'),careerObjective:v('careerObjective'),careerObjectiveAdditional:v('careerObjectiveAdditional'),careerObjectiveEnabled:$('careerObjectiveEnabled')?.checked!==false,declarationEnabled:$('declarationEnabled')?.checked!==false,declarationText:v('declarationText'),declarationPlace:v('declarationPlace'),declarationDate:v('declarationDate'),declarationSignature:v('declarationSignature'),layout:v('layout'),accent:v('accent'),shape:v('shape'),photoSize:v('photoSize'),font:v('font'),iconStyle:v('iconStyle'),compact:$('compact').checked,hidePhoto:$('hidePhoto').checked,basicCustom:readCustom($('basicCustom')),personalCustom:readCustom($('personalCustom')),skillCustom:readCustom($('skillCustom')),exp:[...document.querySelectorAll('#experience .repeat')].map(r=>({t:node(r,'.et'),c:node(r,'.ec'),d:node(r,'.ed'),ex:node(r,'.ex'),custom:readCustom(r.querySelector('.custom-list'))})),edu:[...document.querySelectorAll('#education .repeat')].map(r=>({q:node(r,'.eq'),i:node(r,'.ei'),b:node(r,'.eb'),a:node(r,'.ea'),s:node(r,'.es'),y:node(r,'.ey'),custom:readCustom(r.querySelector('.custom-list'))})),customSections:[...document.querySelectorAll('#customSections .custom-section-editor')].map(r=>({key:r.dataset.orderKey,t:node(r,'.st'),c:node(r,'.sc')})),sectionOrder:sectionOrder.slice()}}
 function saveLocal(){try{localStorage.setItem('professionalCV',JSON.stringify(data()))}catch(e){}}
-function apply(d){Object.entries(d).forEach(([k,x])=>{if($(k)&&!['exp','edu','basicCustom','personalCustom','skillCustom','customSections','sectionOrder'].includes(k))$(k).type==='checkbox'?$(k).checked=!!x:$(k).value=x??''});['basicCustom','personalCustom','skillCustom'].forEach(k=>{$(k).innerHTML='';(d[k]||[]).forEach(x=>customRow($(k),x))});$('experience').innerHTML='';$('education').innerHTML='';$('customSections').innerHTML='';sectionOrder=Array.isArray(d.sectionOrder)?d.sectionOrder.slice():DEFAULT_SECTION_ORDER.slice();(d.exp||[]).forEach(addExp);(d.edu||[]).forEach(addEdu);(d.customSections||[]).forEach(addSection);normalizeOrder();if(d.design){try{localStorage.setItem('cvgen-design-v16',JSON.stringify(d.design))}catch(_){}}update();if(d.design&&window.__cvSetDesignState)window.__cvSetDesignState(d.design)}
+function apply(d){Object.entries(d).forEach(([k,x])=>{if($(k)&&!['exp','edu','basicCustom','personalCustom','skillCustom','customSections','sectionOrder'].includes(k))$(k).type==='checkbox'?$(k).checked=!!x:$(k).value=x??''});['basicCustom','personalCustom','skillCustom'].forEach(k=>{$(k).innerHTML='';(d[k]||[]).forEach(x=>customRow($(k),x))});$('experience').innerHTML='';$('education').innerHTML='';$('customSections').innerHTML='';sectionOrder=Array.isArray(d.sectionOrder)?d.sectionOrder.slice():DEFAULT_SECTION_ORDER.slice();(d.exp||[]).forEach(addExp);(d.edu||[]).forEach(addEdu);(d.customSections||[]).forEach(addSection);normalizeOrder();update();}
 $('resetOrder').onclick=()=>{sectionOrder=DEFAULT_SECTION_ORDER.slice();normalizeOrder();update()};
 $('save').onclick=()=>{let b=new Blob([JSON.stringify(data(),null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='cv-data.json';a.click();URL.revokeObjectURL(a.href)};
 $('load').onclick=()=>{let i=document.createElement('input');i.type='file';i.accept='.json';i.onchange=e=>{let r=new FileReader();r.onload=()=>{try{apply(JSON.parse(r.result))}catch(_){alert('Invalid CV data file.')}};r.readAsText(e.target.files[0])};i.click()};
@@ -418,205 +418,87 @@ try{let s=localStorage.getItem('professionalCV');if(s)apply(JSON.parse(s))}catch
 })();
 
 
-/* ===== v16 Background & Design Studio controller ===== */
-(function(){
-  'use strict';
-  const cv=document.getElementById('cv'); if(!cv)return;
-  const q=id=>document.getElementById(id);
-  const defaults={mode:'none',scope:'page',color1:'#ffffff',color2:'#eaf2ff',direction:'135deg',pattern:'dots',opacity:1,overlay:true,overlayStrength:.18,imageData:'',imageName:'',accent:''};
-  let state=Object.assign({},defaults);
-  const themes={
-    'executive-blue':{mode:'gradient',scope:'page',color1:'#0f3d68',color2:'#eaf3fb',direction:'135deg',overlay:true,overlayStrength:.58,accent:'#0f3d68'},
-    'midnight':{mode:'gradient',scope:'page',color1:'#101828',color2:'#344054',direction:'135deg',overlay:true,overlayStrength:.72,accent:'#101828'},
-    'modern-teal':{mode:'gradient',scope:'page',color1:'#0f766e',color2:'#dff8f4',direction:'135deg',overlay:true,overlayStrength:.42,accent:'#0f766e'},
-    'royal-purple':{mode:'gradient',scope:'page',color1:'#5b21b6',color2:'#eee7ff',direction:'135deg',overlay:true,overlayStrength:.48,accent:'#5b21b6'},
-    'elegant-gold':{mode:'gradient',scope:'header',color1:'#8a6a22',color2:'#fff7df',direction:'135deg',overlay:true,overlayStrength:.35,accent:'#8a6a22'},
-    'corporate-slate':{mode:'gradient',scope:'page',color1:'#344054',color2:'#eef1f4',direction:'135deg',overlay:true,overlayStrength:.48,accent:'#344054'},
-    'clean-gradient':{mode:'gradient',scope:'page',color1:'#f8fbff',color2:'#dcecff',direction:'135deg',overlay:true,overlayStrength:.08,accent:'#2563eb'},
-    'creative-portfolio':{mode:'gradient',scope:'top-band',color1:'#c026d3',color2:'#06b6d4',direction:'135deg',overlay:true,overlayStrength:.28,accent:'#7c3aed'}
-  };
-  const hex=v=>/^#[0-9a-fA-F]{6}$/.test(v||'')?v.toLowerCase():'#ffffff';
-  const rgb=h=>{h=hex(h).slice(1);const n=parseInt(h,16);return[(n>>16)&255,(n>>8)&255,n&255]};
-  const rgba=(h,a)=>{const [r,g,b]=rgb(h);return`rgba(${r},${g},${b},${a})`};
-  const pattern=(k,a,b)=>{
-    const c=rgba(a,.18),d=rgba(b,.16);
-    if(k==='grid')return`linear-gradient(${c} 1px,transparent 1px),linear-gradient(90deg,${c} 1px,transparent 1px)`;
-    if(k==='diagonal')return`repeating-linear-gradient(135deg,${c} 0 1px,transparent 1px 11px)`;
-    if(k==='circles')return`radial-gradient(circle at 20% 20%,${c} 0 18%,transparent 19%),radial-gradient(circle at 80% 75%,${d} 0 15%,transparent 16%)`;
-    if(k==='waves')return`repeating-radial-gradient(ellipse at 0 100%,transparent 0 12px,${c} 13px 14px,transparent 15px 26px)`;
-    return`radial-gradient(circle,${c} 1px,transparent 1.5px)`;
-  };
-  function image(s){
-    if(s.mode==='image'&&s.imageData)return`url("${s.imageData.replace(/"/g,'%22')}")`;
-    if(s.mode==='pattern')return pattern(s.pattern,s.color1,s.color2);
-    if(s.mode==='gradient')return`linear-gradient(${s.direction},${s.color1},${s.color2})`;
-    if(s.mode==='solid')return'none';
-    return'none';
-  }
-  function stateForData(){return Object.assign({},state)}
-  window.__cvDesignState=stateForData;
-  function sync(){
-    const map={bgMode:'mode',bgScope:'scope',bgColor1:'color1',bgColor2:'color2',bgDirection:'direction',bgPattern:'pattern',bgOpacity:'opacity',bgOverlay:'overlay',bgOverlayStrength:'overlayStrength'};
-    Object.keys(map).forEach(id=>{const e=q(id),k=map[id];if(!e)return;if(e.type==='checkbox')e.checked=!!state[k];else e.value=state[k]});
-    if(q('bgColor1Text'))q('bgColor1Text').value=state.color1;
-    if(q('bgColor2Text'))q('bgColor2Text').value=state.color2;
-    if(q('bgOpacityValue'))q('bgOpacityValue').textContent=Math.round(state.opacity*100)+'%';
-    if(q('bgOverlayValue'))q('bgOverlayValue').textContent=Math.round(state.overlayStrength*100)+'%';
-    if(q('backgroundImageName'))q('backgroundImageName').textContent=state.imageName||'No image selected';
-  }
-  function apply(){
-    cv.classList.remove('design-active','design-scope-page','design-scope-header','design-scope-top-band','design-has-overlay');
-    cv.style.removeProperty('--cv-bg-color');cv.style.removeProperty('--cv-bg-image');cv.style.removeProperty('--cv-overlay');cv.style.removeProperty('--cv-design-accent');
-    if(state.mode==='none'){sync();return}
-    cv.classList.add('design-active','design-scope-'+state.scope);
-    if(state.overlay)cv.classList.add('design-has-overlay');
-    cv.style.setProperty('--cv-bg-color',state.mode==='solid'?rgba(state.color1,state.opacity):'transparent');
-    cv.style.setProperty('--cv-bg-image',image(state));
-    cv.style.setProperty('--cv-overlay',`rgba(255,255,255,${state.overlayStrength})`);if(state.accent)cv.style.setProperty('--cv-design-accent',state.accent);if(state.accent)cv.style.setProperty('--accent',state.accent);
-    sync();
-  }
-  window.__cvApplyDesign=apply;
-  window.__cvDesignGetState=stateForData;
-  window.__cvSetDesignState=function(s){state=Object.assign({},defaults,s||{});apply();};
-  function update(){
-    state.mode=q('bgMode')?.value||'none';state.scope=q('bgScope')?.value||'page';
-    state.color1=hex(q('bgColor1')?.value||state.color1);state.color2=hex(q('bgColor2')?.value||state.color2);
-    state.direction=q('bgDirection')?.value||state.direction;state.pattern=q('bgPattern')?.value||state.pattern;
-    state.opacity=Number(q('bgOpacity')?.value||1);state.overlay=!!q('bgOverlay')?.checked;state.overlayStrength=Number(q('bgOverlayStrength')?.value||0);
-    apply();try{localStorage.setItem('cvgen-design-v16',JSON.stringify(state))}catch(e){}
-  }
-  ['bgMode','bgScope','bgColor1','bgColor2','bgDirection','bgPattern','bgOpacity','bgOverlay','bgOverlayStrength'].forEach(id=>q(id)?.addEventListener('input',update));
-  ['bgMode','bgScope','bgColor1','bgColor2','bgDirection','bgPattern','bgOpacity','bgOverlay','bgOverlayStrength'].forEach(id=>q(id)?.addEventListener('change',update));
-  q('bgColor1Text')?.addEventListener('input',()=>{state.color1=hex(q('bgColor1Text').value);if(q('bgColor1'))q('bgColor1').value=state.color1;apply()});
-  q('bgColor2Text')?.addEventListener('input',()=>{state.color2=hex(q('bgColor2Text').value);if(q('bgColor2'))q('bgColor2').value=state.color2;apply()});
-  q('backgroundImage')?.addEventListener('change',e=>{
-    const f=e.target.files?.[0];if(!f)return;
-    const r=new FileReader();r.onload=()=>{state.mode='image';state.imageData=r.result;state.imageName=f.name;apply();try{localStorage.setItem('cvgen-design-v16',JSON.stringify(state))}catch(_){}};
-    r.readAsDataURL(f);
-  });
-  q('clearBackgroundImage')?.addEventListener('click',()=>{state.imageData='';state.imageName='';if(q('backgroundImage'))q('backgroundImage').value='';state.mode='none';apply();try{localStorage.removeItem('cvgen-design-v16')}catch(_){}});
-  q('resetDesign')?.addEventListener('click',()=>{state=Object.assign({},defaults);apply();try{localStorage.removeItem('cvgen-design-v16')}catch(_){}});
-  document.querySelectorAll('.theme-card').forEach(card=>card.addEventListener('click',()=>{document.querySelectorAll('.theme-card').forEach(c=>c.classList.remove('active'));card.classList.add('active');state=Object.assign({},defaults,themes[card.dataset.theme]||{});apply();try{localStorage.setItem('cvgen-design-v16',JSON.stringify(state))}catch(_){};}));
-  try{const saved=JSON.parse(localStorage.getItem('cvgen-design-v16')||'null');if(saved)state=Object.assign({},defaults,saved)}catch(_){}
-  apply();
-})();
 
-/* ===== v18 functional fixes ===== */
+/* ===== v19 focused fixes: Career Objective + A4 Auto Fit ===== */
 (function(){
   'use strict';
   const q=id=>document.getElementById(id);
   const cv=q('cv');
   if(!cv)return;
 
-  // Career Objective: use a dedicated renderer so the Show checkbox is never
-  // overridden by the generic section visibility logic.
-  function renderObjective(){
-    const host=q('careerObjectivePreview'), body=q('pCareerObjective');
+  function renderCareerObjective(){
+    const host=q('careerObjectivePreview'), body=q('pCareerObjective'), toggle=q('careerObjectiveEnabled');
     if(!host||!body)return;
-    const enabled=q('careerObjectiveEnabled') ? q('careerObjectiveEnabled').checked : true;
+    const enabled=!toggle || toggle.checked;
     const text=(q('careerObjective')?.value||'').trim();
     const extra=(q('careerObjectiveAdditional')?.value||'').trim();
-    body.replaceChildren();
-    if(enabled && (text||extra)){
-      host.style.setProperty('display','block','important');
-      if(text){const d=document.createElement('div');d.className='objective-text';d.textContent=text;body.appendChild(d)}
-      if(extra){const d=document.createElement('div');d.className='objective-extra';d.textContent=extra;body.appendChild(d)}
-    }else host.style.setProperty('display','none','important');
+    body.textContent='';
+    if(!enabled){
+      host.hidden=true;
+      host.style.removeProperty('display');
+      return;
+    }
+    host.hidden=false;
+    host.style.setProperty('display','block','important');
+    if(text){const d=document.createElement('div');d.className='objective-text';d.textContent=text;body.appendChild(d)}
+    if(extra){const d=document.createElement('div');d.className='objective-extra';d.textContent=extra;body.appendChild(d)}
   }
-  ['careerObjective','careerObjectiveAdditional','careerObjectiveEnabled'].forEach(id=>{
-    const e=q(id); if(e){e.addEventListener('input',renderObjective);e.addEventListener('change',renderObjective);}
-  });
 
-  // A real A4 auto-fit controller. It measures the rendered CV and scales the
-  // complete page only when content exceeds the printable A4 height.
-  function applyAutoFit(){
-    const enabled=!!q('autoFit')?.checked;
-    cv.classList.remove('auto-fit-active');
-    cv.style.removeProperty('--cv-fit-scale');
+  function fitA4(){
+    const enabled=q('autoFit')?.checked;
+    cv.style.removeProperty('zoom');
     cv.style.removeProperty('transform');
     cv.style.removeProperty('transform-origin');
+    cv.style.removeProperty('height');
+    cv.classList.remove('a4-auto-fitted');
     if(!enabled)return;
-    // Temporarily allow measurement of the complete page.
-    const oldOverflow=cv.style.overflow; cv.style.overflow='visible';
-    const pageH=cv.clientHeight || 1122;
-    const contentH=cv.scrollHeight;
-    const scale=Math.min(1,(pageH-2)/Math.max(pageH,contentH));
+
+    // Measure the actual rendered content while allowing it to extend beyond A4.
+    const oldOverflow=cv.style.overflow;
+    const oldMinHeight=cv.style.minHeight;
+    cv.style.overflow='visible';
+    cv.style.minHeight='0';
+    const pageWidth=cv.getBoundingClientRect().width || 794;
+    const pageHeight=297/210*pageWidth;
+    let bottom=0;
+    cv.querySelectorAll(':scope > *').forEach(el=>{
+      if(el.hidden || getComputedStyle(el).display==='none')return;
+      const r=el.getBoundingClientRect();
+      const cr=cv.getBoundingClientRect();
+      bottom=Math.max(bottom,r.bottom-cr.top);
+    });
+    const naturalHeight=Math.max(bottom,cv.scrollHeight);
+    const scale=Math.min(1,(pageHeight-2)/Math.max(pageHeight,naturalHeight));
     if(scale<0.999){
-      cv.classList.add('auto-fit-active');
-      cv.style.setProperty('--cv-fit-scale',String(scale));
-      cv.style.transformOrigin='top center';
-      cv.style.transform='scale('+scale+')';
+      cv.classList.add('a4-auto-fitted');
+      cv.style.zoom=String(scale);
+      cv.style.minHeight='297mm';
+    }else{
+      cv.style.minHeight='297mm';
     }
     cv.style.overflow=oldOverflow;
+    if(oldMinHeight && scale>=0.999)cv.style.minHeight=oldMinHeight;
   }
+
+  // These handlers run after the existing live-update handler, so the final
+  // rendered state always wins.
+  ['careerObjective','careerObjectiveAdditional','careerObjectiveEnabled'].forEach(id=>{
+    const el=q(id); if(!el)return;
+    el.addEventListener('input',()=>setTimeout(renderCareerObjective,0));
+    el.addEventListener('change',()=>setTimeout(renderCareerObjective,0));
+  });
   const af=q('autoFit');
-  if(af){af.addEventListener('change',applyAutoFit);window.addEventListener('resize',()=>setTimeout(applyAutoFit,60));}
-
-  // Robust Design Studio. Apply backgrounds directly to the affected element,
-  // rather than depending on a class cascade that can be reset by layout changes.
-  function clearDesign(){
-    const top=cv.querySelector('.top');
-    cv.style.backgroundColor='';cv.style.backgroundImage='';
-    if(top){top.style.backgroundColor='';top.style.backgroundImage='';}
-    const band=cv.querySelector('.design-band-layer');if(band)band.remove();
+  if(af){
+    af.addEventListener('change',()=>setTimeout(fitA4,0));
+    window.addEventListener('resize',()=>setTimeout(fitA4,100));
   }
-  function applyDesignDirect(){
-    const mode=q('bgMode')?.value||'none', scope=q('bgScope')?.value||'page';
-    clearDesign();
-    if(mode==='none')return;
-    const c1=q('bgColor1')?.value||'#ffffff', c2=q('bgColor2')?.value||'#eaf2ff';
-    const opacity=Math.max(.1,Math.min(1,Number(q('bgOpacity')?.value||1)));
-    const direction=q('bgDirection')?.value||'135deg';
-    const pattern=q('bgPattern')?.value||'dots';
-    const overlay=q('bgOverlay')?.checked!==false;
-    const overlayStrength=Math.max(0,Math.min(.65,Number(q('bgOverlayStrength')?.value||0)));
-    const imageInput=q('backgroundImage');
-    let imageData=imageInput?.dataset?.imageData||'';
-    let bg='';
-    if(mode==='solid') bg=c1;
-    else if(mode==='gradient') bg=`linear-gradient(${direction},${c1},${c2})`;
-    else if(mode==='pattern'){
-      if(pattern==='grid') bg=`linear-gradient(rgba(0,0,0,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,.08) 1px,transparent 1px)`;
-      else if(pattern==='diagonal') bg=`repeating-linear-gradient(135deg,rgba(0,0,0,.07) 0 1px,transparent 1px 11px)`;
-      else if(pattern==='circles') bg=`radial-gradient(circle at 20% 20%,rgba(0,0,0,.08) 0 18%,transparent 19%),radial-gradient(circle at 80% 75%,rgba(0,0,0,.06) 0 15%,transparent 16%)`;
-      else if(pattern==='waves') bg=`repeating-radial-gradient(ellipse at 0 100%,transparent 0 12px,rgba(0,0,0,.07) 13px 14px,transparent 15px 26px)`;
-      else bg=`radial-gradient(circle,rgba(0,0,0,.10) 1px,transparent 1.5px)`;
-      bg += ',linear-gradient('+direction+','+c1+','+c2+')';
-    } else if(mode==='image' && imageData) bg=`url("${imageData}")`;
-    const target=scope==='header'?cv.querySelector('.top'):cv;
-    if(scope==='top-band'){
-      const layer=document.createElement('div');layer.className='design-band-layer';
-      layer.style.position='absolute';layer.style.left='0';layer.style.right='0';layer.style.top='0';layer.style.height='25%';
-      layer.style.background=bg;layer.style.backgroundSize='cover';layer.style.backgroundPosition='center';layer.style.opacity=String(opacity);layer.style.pointerEvents='none';layer.style.zIndex='0';
-      cv.prepend(layer);
-      cv.querySelectorAll(':scope > *').forEach(el=>{if(el!==layer){el.style.position=el.style.position||'relative';el.style.zIndex=el.style.zIndex||'1'}});
-    }else if(target){
-      target.style.background=bg;target.style.backgroundSize='cover';target.style.backgroundPosition='center';target.style.backgroundRepeat='no-repeat';target.style.backgroundBlendMode='normal';target.style.setProperty('background-color',mode==='solid'?c1:'transparent');
-      target.style.opacity='1';
-    }
-    if(overlay){
-      const target2=scope==='header'?cv.querySelector('.top'):scope==='top-band'?cv:cv;
-      if(target2){target2.style.backgroundBlendMode='screen';target2.style.setProperty('--design-overlay',String(overlayStrength));}
-    }
-  }
-  // Capture image data without relying on localStorage size.
-  const file=q('backgroundImage');
-  if(file){file.addEventListener('change',e=>{const f=e.target.files?.[0];if(!f)return;const r=new FileReader();r.onload=()=>{file.dataset.imageData=r.result;file.dataset.imageName=f.name;if(q('backgroundImageName'))q('backgroundImageName').textContent=f.name;const mode=q('bgMode');if(mode)mode.value='image';applyDesignDirect();};r.readAsDataURL(f);});}
-  ['bgMode','bgScope','bgColor1','bgColor2','bgDirection','bgPattern','bgOpacity','bgOverlay','bgOverlayStrength'].forEach(id=>{const e=q(id);if(e){e.addEventListener('input',applyDesignDirect);e.addEventListener('change',applyDesignDirect);}});
-  ['bgColor1Text','bgColor2Text'].forEach((id,i)=>{const e=q(id);if(e)e.addEventListener('input',()=>{const c=i===0?q('bgColor1'):q('bgColor2');if(c&&/^#[0-9a-fA-F]{6}$/.test(e.value))c.value=e.value;applyDesignDirect();});});
-  q('resetDesign')?.addEventListener('click',()=>{clearDesign();if(q('bgMode'))q('bgMode').value='none';if(file){file.value='';delete file.dataset.imageData;delete file.dataset.imageName;}applyDesignDirect();});
-  document.querySelectorAll('.theme-card').forEach(card=>card.addEventListener('click',()=>{
-    const themes={
-      'executive-blue':['gradient','page','#0f3d68','#eaf3fb','135deg'], 'midnight':['gradient','page','#101828','#344054','135deg'],
-      'modern-teal':['gradient','page','#0f766e','#dff8f4','135deg'], 'royal-purple':['gradient','page','#5b21b6','#eee7ff','135deg'],
-      'elegant-gold':['gradient','header','#8a6a22','#fff7df','135deg'], 'corporate-slate':['gradient','page','#344054','#eef1f4','135deg'],
-      'clean-gradient':['gradient','page','#f8fbff','#dcecff','135deg'], 'creative-portfolio':['gradient','top-band','#c026d3','#06b6d4','135deg']
-    };
-    const t=themes[card.dataset.theme];if(!t)return;
-    ['bgMode','bgScope','bgColor1','bgColor2','bgDirection'].forEach((id,i)=>{if(q(id))q(id).value=t[i]});
-    applyDesignDirect();
-  }));
 
-  window.__cvV18Refresh=()=>{renderObjective();applyDesignDirect();setTimeout(applyAutoFit,0)};
-  setTimeout(window.__cvV18Refresh,30);
+  // Re-apply after every normal CV update without creating another global input loop.
+  const originalUpdate=window.update;
+  if(typeof originalUpdate==='function'){
+    // update() is not exported by the original script, so use an observer for
+    // the preview instead of replacing its internal function.
+  }
+  window.__cvV19Refresh=()=>{renderCareerObjective();fitA4()};
+  setTimeout(()=>window.__cvV19Refresh(),0);
 })();
