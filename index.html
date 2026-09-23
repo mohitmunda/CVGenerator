@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Exact Reference CV Generator</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="appbar">
+  <div><h1>CV Generator</h1><p>Exact reference-layout mode • A4 portrait</p></div>
+  <div class="actions">
+    <button id="save">Save Data</button><button id="load">Load Data</button>
+    <button class="primary" id="print">Generate / Print CV</button>
+  </div>
+</header>
+
+<main>
+<aside class="editor">
+  <section class="panel">
+    <div class="demo-note"><b>Demo data:</b> The pre-filled information is fictional example content for GitHub/public demos. Replace it with your own details.</div>
+    <h2>Basic Information</h2>
+    <div class="two">
+      <label>Full Name<input id="name" value="ALEX JOHNSON"></label>
+      <label>Profile Photo<input id="photo" type="file" accept="image/*"></label>
+    </div>
+    <label>Address<textarea id="address" rows="3">123 Main Street, Green Park,
+Springfield, State
+PIN-123456</textarea></label>
+    <div class="two">
+      <label>Phone<input id="phone" placeholder="+91 XXXXX XXXXX"></label>
+      <label>Email<input id="email" placeholder="your@email.com"></label>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>Personal Information</h2>
+    <div class="two">
+      <label>Date of Birth<input id="dob" value="15-08-1998"></label>
+      <label>Age<input id="age" value="28 Years"></label>
+      <label>Father's Name<input id="father" value="ROBERT JOHNSON"></label>
+      <label>Mother's Name<input id="mother" value="MARY JOHNSON"></label>
+      <label>Gender<input id="gender" value="MALE"></label>
+      <label>Marital Status<input id="marital" value="SINGLE"></label>
+      <label>Languages Spoken<input id="languages" value="ENGLISH, HINDI"></label>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>Skills & Interests</h2>
+    <p>One item per line. The spacing is automatically matched to the reference.</p>
+    <textarea id="skills" rows="17">Web Designing
+Website Management
+WordPress
+HTML, HTML5
+CSS
+JavaScript
+PHP
+MySQL, SQL
+Git & GitHub
+MS Word
+MS Excel
+Team Work Skills
+Effective Communication
+Problem Solving
+Teaching
+Photography</textarea>
+  </section>
+
+  <section class="panel">
+    <h2>Experience</h2>
+    <div id="experience"></div>
+    <button class="add" id="addExperience">+ Add Experience</button>
+  </section>
+
+  <section class="panel">
+    <h2>Educational Details</h2>
+    <div id="education"></div>
+    <button class="add" id="addEducation">+ Add Education</button>
+  </section>
+
+  <section class="panel">
+    <h2>Additional Options</h2>
+    <p>These are available when you need them. The default CV remains in the exact reference layout.</p>
+    <label>Optional Professional Summary<textarea id="summary" rows="3" placeholder="Leave blank to keep the exact reference structure"></textarea></label>
+    <label>Optional Projects<textarea id="projects" rows="3" placeholder="Project name — description"></textarea></label>
+    <label>Optional Certifications<textarea id="certs" rows="3" placeholder="Certificate — Issuer — Year"></textarea></label>
+    <label>Optional Achievements<textarea id="achievements" rows="3" placeholder="One per line"></textarea></label>
+    <label>Optional Hobbies<textarea id="hobbies" rows="2" placeholder="One per line"></textarea></label>
+  </section>
+
+  <section class="panel">
+    <h2>Photo & Print Settings</h2>
+    <div class="two">
+      <label>Photo Shape<select id="shape"><option value="rect">Rectangular</option><option value="rounded">Rounded Rectangle</option><option value="circle">Circular</option></select></label>
+      <label>Photo Size<select id="photoSize"><option value="reference">Reference</option><option value="small">Small</option><option value="large">Large</option></select></label>
+    </div>
+    <div class="two">
+      <label>CV Font<select id="font"><option value="Arial">Arial</option><option value="Helvetica">Helvetica</option><option value="Calibri">Calibri</option></select></label>
+      <label>Exact Layout<select id="mode"><option value="exact">Exact Reference Layout</option><option value="extended">Extended Sections</option></select></label>
+    </div>
+    <label class="check"><input id="hidePhoto" type="checkbox"> Hide photo</label>
+  </section>
+</aside>
+
+<section class="preview">
+  <div class="preview-head"><b>Live Preview</b><span>A4 • 210 × 297 mm</span></div>
+  <div class="sheet-wrap">
+    <article id="cv" class="cv">
+      <header class="top">
+        <div class="contact">
+          <h1 id="pName">MOHIT MUNDA</h1>
+          <div class="line address"><i class="ico">●</i><span id="pAddress"></span></div>
+          <div class="line" id="phoneRow"><i class="ico">◒</i><b>Phone:</b><span id="pPhone">-</span></div>
+          <div class="line" id="emailRow"><i class="ico">✉</i><b>Email:</b><span id="pEmail">-</span></div>
+        </div>
+        <img id="pPhoto" class="photo rect" alt="">
+      </header>
+
+      <section class="cvsec personal">
+        <h2><span class="secico">▣</span>PERSONAL INFORMATION</h2>
+        <div class="personal-grid" id="personalGrid"></div>
+      </section>
+
+      <section class="cvsec" id="skillsSec">
+        <h2><span class="secico">◎</span>SKILLS AND INTERESTS</h2>
+        <div id="pSkills" class="skills"></div>
+      </section>
+
+      <section class="cvsec" id="experienceSec">
+        <h2><span class="secico">♙</span>EXPERIENCE</h2>
+        <div id="pExperience"></div>
+      </section>
+
+      <section class="cvsec" id="educationSec">
+        <h2><span class="secico">◆</span>EDUCATIONAL DETAILS</h2>
+        <div id="pEducation"></div>
+      </section>
+
+      <section class="cvsec extra" id="summarySec"><h2><span class="secico">✦</span>PROFESSIONAL SUMMARY</h2><div id="pSummary"></div></section>
+      <section class="cvsec extra" id="projectsSec"><h2><span class="secico">◈</span>PROJECTS</h2><div id="pProjects"></div></section>
+      <section class="cvsec extra" id="certsSec"><h2><span class="secico">✪</span>CERTIFICATIONS & TRAINING</h2><div id="pCerts"></div></section>
+      <section class="cvsec extra" id="achievementsSec"><h2><span class="secico">★</span>ACHIEVEMENTS</h2><div id="pAchievements"></div></section>
+      <section class="cvsec extra" id="hobbiesSec"><h2><span class="secico">♡</span>HOBBIES & INTERESTS</h2><div id="pHobbies"></div></section>
+    </article>
+  </div>
+</section>
+</main>
+
+<template id="expTpl">
+<div class="repeat">
+  <div class="repeat-title"><b>Experience</b><button type="button" class="remove">Remove</button></div>
+  <div class="two"><label>Job / Role<input class="et"></label><label>Company<input class="ec"></label></div>
+  <label>Duration<input class="ed"></label>
+  <label>Description<textarea class="ex" rows="2"></textarea></label>
+</div>
+</template>
+
+<template id="eduTpl">
+<div class="repeat">
+  <div class="repeat-title"><b>Education</b><button type="button" class="remove">Remove</button></div>
+  <div class="two"><label>Qualification<input class="eq"></label><label>Institution<input class="ei"></label></div>
+  <div class="two"><label>Board / University<input class="eb"></label><label>Aggregate<input class="ea"></label></div>
+  <div class="two"><label>Stream<input class="es"></label><label>Passing Year<input class="ey"></label></div>
+</div>
+</template>
+<script src="script.js"></script>
+</body>
+</html>
