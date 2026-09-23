@@ -587,16 +587,11 @@
   font-weight:600;
 }
 
-/* Declaration always comes last and sits toward the bottom of the A4 page. */
-.cv{
-  display:flex !important;
-  flex-direction:column !important;
-  min-height:297mm !important;
-}
+/* Declaration: optional section placed directly below Educational Details. */
 .cv > #declarationPreview{
-  margin-top:auto !important;
-  padding-top:16mm !important;
-  padding-bottom:7mm !important;
+  margin-top:14px !important;
+  padding-top:0 !important;
+  padding-bottom:4mm !important;
   width:100%;
   flex:0 0 auto;
   page-break-inside:avoid !important;
@@ -622,16 +617,15 @@
 @media print{
   .cv{
     min-height:297mm !important;
-    height:297mm !important;
-    overflow:hidden !important;
+    height:auto !important;
+    overflow:visible !important;
   }
   .cv > #declarationPreview{
-    margin-top:auto !important;
-    padding-top:12mm !important;
-    padding-bottom:5mm !important;
+    margin-top:14px !important;
+    padding-top:0 !important;
+    padding-bottom:4mm !important;
   }
 }
-
 
 /* ===== Career Objective ===== */
 /* Career Objective */
@@ -642,4 +636,4 @@
 
 /* v19 A4 auto-fit */
 .cv.a4-auto-fitted{transform-origin:top left}
-@media print{.cv.a4-auto-fitted{zoom:1!important;transform:none!important}}
+
