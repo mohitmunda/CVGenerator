@@ -320,3 +320,128 @@
   .cv.layout-modern .cv-body{display:grid!important;grid-template-columns:34% 66%!important}
   .cv.layout-modern .cv-left,.cv.layout-modern .cv-right{padding:12px}
 }
+
+/* ===== Version 11 Sidebar Alignment Fix ===== */
+.cv.layout-sidebar{
+  width:210mm !important;
+  max-width:210mm !important;
+  min-height:297mm !important;
+  padding:0 !important;
+  display:block !important;
+  position:relative;
+  overflow:hidden !important;
+}
+.cv.layout-sidebar .cv-top{
+  width:100% !important;
+  max-width:100% !important;
+  padding:14mm 32mm 7mm 14mm !important;
+  margin:0 !important;
+  position:relative;
+}
+.cv.layout-sidebar .cv-body,
+.cv.layout-sidebar .cv-main{
+  width:100% !important;
+  max-width:100% !important;
+  min-width:0 !important;
+  padding-right:30mm !important;
+  padding-left:14mm !important;
+  overflow:hidden !important;
+}
+.cv.layout-sidebar .cv-sidebar-accent{
+  position:absolute !important;
+  z-index:0 !important;
+  right:0 !important;
+  top:0 !important;
+  bottom:0 !important;
+  width:25mm !important;
+  min-width:25mm !important;
+  max-width:25mm !important;
+  height:100% !important;
+  overflow:hidden !important;
+}
+.cv.layout-sidebar .cv-top > *,
+.cv.layout-sidebar .cv-body > *,
+.cv.layout-sidebar .cv-main > *{
+  position:relative;
+  z-index:1;
+  min-width:0;
+  max-width:100%;
+}
+.cv.layout-sidebar .cv-name,
+.cv.layout-sidebar .section-title,
+.cv.layout-sidebar p,
+.cv.layout-sidebar li,
+.cv.layout-sidebar td,
+.cv.layout-sidebar .value{
+  overflow-wrap:anywhere !important;
+  word-break:normal !important;
+  hyphens:auto;
+}
+.cv.layout-sidebar .personal-grid{
+  width:100%;
+  max-width:100%;
+  min-width:0;
+  display:grid;
+  grid-template-columns:minmax(0,34%) 10px minmax(0,66%);
+}
+.cv.layout-sidebar img{
+  max-width:100%;
+  height:auto;
+}
+.cv.layout-sidebar .custom-preview-sections{
+  width:100%;
+  max-width:100%;
+}
+.cv.layout-sidebar .custom-preview-section{
+  width:100%;
+  max-width:100%;
+  overflow:hidden;
+}
+.cv.layout-sidebar .custom-content,
+.cv.layout-sidebar .objective-text{
+  white-space:pre-line;
+  overflow-wrap:anywhere;
+}
+
+/* Clean custom editor styling */
+.custom-editor-item{
+  overflow:hidden;
+}
+.custom-editor-item .custom-title,
+.custom-editor-item .custom-content-input,
+.custom-editor-item .custom-extra-input{
+  box-sizing:border-box;
+}
+.custom-preview-sections{
+  clear:both;
+}
+.custom-preview-section + .custom-preview-section{
+  margin-top:12px;
+}
+
+/* Nationality editor field should behave exactly like other personal fields */
+.personal-nationality-field{
+  min-width:0;
+}
+.personal-nationality-field input{
+  width:100%;
+}
+
+/* Prevent accidental recursive/duplicate preview blocks */
+#customPreviewSections #customPreviewSections{
+  display:none !important;
+}
+@media print{
+  .cv.layout-sidebar{
+    width:210mm !important;
+    min-height:297mm !important;
+  }
+  .cv.layout-sidebar .cv-top{
+    padding:12mm 30mm 6mm 12mm !important;
+  }
+  .cv.layout-sidebar .cv-body,
+  .cv.layout-sidebar .cv-main{
+    padding-left:12mm !important;
+    padding-right:30mm !important;
+  }
+}

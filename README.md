@@ -72,3 +72,10 @@ Font selection is stored locally in the browser and can be changed independently
 - Reworked Custom Sections so only the entered title, content and optional additional detail are rendered in the CV preview; editor controls/text no longer leak into the CV.
 - Added Nationality to Personal Information.
 - Added a dedicated Career Objective section with optional additional detail.
+
+
+## Version 11 — Final Fix Pass
+- Nationality is now explicitly included in the Personal Information editor and preview.
+- Replaced the previous custom-section renderer with an isolated renderer that updates only its dedicated preview container, preventing continuous/recursive text generation.
+- Custom sections now render only their title, content and optional additional detail.
+- Sidebar layout was rebuilt with fixed A4 geometry, bounded content widths, predictable sidebar dimensions, and safer text wrapping.

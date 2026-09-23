@@ -234,100 +234,211 @@ try{let s=localStorage.getItem('professionalCV');if(s)apply(JSON.parse(s))}catch
   applyFont(saved);
 })();
 
-/* ===== Version 10 clean custom-section engine ===== */
-(function(){
-  const cv=document.querySelector('.cv');
-  if(!cv) return;
-  const q=id=>document.getElementById(id);
-  const list=q('customSections');
-  const add=q('addCustomSection');
-  const preview=q('customPreviewSections');
 
-  function esc(s){
-    return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+/* ===== Version 11: isolated Custom Sections + Nationality + Sidebar renderer ===== */
+(function(){
+  'use strict';
+
+  const $ = id => document.getElementById(id);
+  const cv = document.querySelector('.cv');
+
+  function escapeHTML(value){
+    return String(value == null ? '' : value)
+      .replace(/&/g,'&amp;')
+      .replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;')
+      .replace(/'/g,'&#39;');
   }
 
-  function renderCustomPreview(){
-    if(!preview) return;
-    preview.innerHTML='';
-    document.querySelectorAll('.custom-editor-item').forEach(item=>{
-      const title=item.querySelector('.custom-title')?.value?.trim()||'';
-      const content=item.querySelector('.custom-content-input')?.value?.trim()||'';
-      const extra=item.querySelector('.custom-extra-input')?.value?.trim()||'';
+  /* ---------- Personal Information: Nationality ---------- */
+  function updateNationality(){
+    const input = $('nationality');
+    const targets = document.querySelectorAll('[data-field="nationality"]');
+    const value = input ? input.value.trim() : '';
+    targets.forEach(t => t.textContent = value);
+    targets.forEach(t => {
+      const row = t.closest('.personal-item');
+      if(row) row.style.display = value ? '' : 'none';
+    });
+  }
+  const nationalityInput = $('nationality');
+  if(nationalityInput) nationalityInput.addEventListener('input', updateNationality);
+  updateNationality();
+
+  /* ---------- Custom Sections ---------- */
+  const customList = $('customSections');
+  const addCustom = $('addCustomSection');
+  let previewHost = $('customPreviewSections');
+
+  // If a preview host is missing, create exactly ONE.
+  if(!previewHost && cv){
+    previewHost = document.createElement('div');
+    previewHost.id = 'customPreviewSections';
+    previewHost.className = 'custom-preview-sections';
+    cv.appendChild(previewHost);
+  }
+
+  function renderCustomSections(){
+    if(!previewHost) return;
+
+    // Important: only replace THIS dedicated host.
+    // Never write into the editor, the whole CV, or document.body.
+    previewHost.replaceChildren();
+
+    if(!customList) return;
+
+    const items = customList.querySelectorAll(':scope > .custom-editor-item');
+    items.forEach(item => {
+      const titleEl = item.querySelector('.custom-title');
+      const contentEl = item.querySelector('.custom-content-input');
+      const extraEl = item.querySelector('.custom-extra-input');
+
+      const title = titleEl ? titleEl.value.trim() : '';
+      const content = contentEl ? contentEl.value.trim() : '';
+      const extra = extraEl ? extraEl.value.trim() : '';
+
+      // Completely empty custom sections are not rendered.
       if(!title && !content && !extra) return;
-      const sec=document.createElement('section');
-      sec.className='custom-preview-section';
-      sec.innerHTML=
-        (title?'<h3 class="section-title">'+esc(title)+'</h3>':'')+
-        (extra?'<div class="custom-subtitle">'+esc(extra)+'</div>':'')+
-        (content?'<div class="custom-content">'+esc(content)+'</div>':'');
-      preview.appendChild(sec);
+
+      const section = document.createElement('section');
+      section.className = 'custom-preview-section';
+
+      if(title){
+        const heading = document.createElement('h3');
+        heading.className = 'section-title';
+        heading.textContent = title;
+        section.appendChild(heading);
+      }
+
+      if(extra){
+        const subtitle = document.createElement('div');
+        subtitle.className = 'custom-subtitle';
+        subtitle.textContent = extra;
+        section.appendChild(subtitle);
+      }
+
+      if(content){
+        const body = document.createElement('div');
+        body.className = 'custom-content';
+        body.textContent = content;
+        section.appendChild(body);
+      }
+
+      previewHost.appendChild(section);
     });
   }
 
-  function addItem(data={}){
-    if(!list) return;
-    const item=document.createElement('div');
-    item.className='custom-editor-item';
-    item.innerHTML=`
+  function wireCustomItem(item){
+    item.querySelectorAll('input, textarea').forEach(el => {
+      el.addEventListener('input', renderCustomSections);
+      el.addEventListener('change', renderCustomSections);
+    });
+
+    const del = item.querySelector('.custom-delete');
+    if(del){
+      del.addEventListener('click', function(){
+        item.remove();
+        renderCustomSections();
+      });
+    }
+  }
+
+  function addCustomSection(data){
+    if(!customList) return;
+
+    const item = document.createElement('div');
+    item.className = 'custom-editor-item';
+
+    const title = data && data.title ? data.title : '';
+    const content = data && data.content ? data.content : '';
+    const extra = data && data.extra ? data.extra : '';
+
+    item.innerHTML = `
       <div class="custom-row">
-        <input class="custom-title" type="text" placeholder="Section title, e.g. Publications" value="${esc(data.title||'')}">
+        <input class="custom-title" type="text" placeholder="Section title, e.g. Publications">
         <button type="button" class="custom-delete">Delete</button>
       </div>
-      <textarea class="custom-content-input" placeholder="Enter the section content...">${esc(data.content||'')}</textarea>
+      <textarea class="custom-content-input" placeholder="Enter content for this section..."></textarea>
       <div class="custom-extra">
         <label>Additional Option</label>
-        <input class="custom-extra-input" type="text" placeholder="Optional subtitle / extra detail" value="${esc(data.extra||'')}">
+        <input class="custom-extra-input" type="text" placeholder="Optional subtitle / extra detail">
       </div>`;
-    list.appendChild(item);
-    item.querySelectorAll('input,textarea').forEach(el=>el.addEventListener('input',renderCustomPreview));
-    item.querySelector('.custom-delete').addEventListener('click',()=>{item.remove();renderCustomPreview();});
-    renderCustomPreview();
+
+    item.querySelector('.custom-title').value = title;
+    item.querySelector('.custom-content-input').value = content;
+    item.querySelector('.custom-extra-input').value = extra;
+
+    customList.appendChild(item);
+    wireCustomItem(item);
+    renderCustomSections();
   }
 
-  if(add) add.addEventListener('click',()=>addItem());
-  // Convert any old custom-section rows to the clean renderer only if they use our fields.
-  if(list && !list.children.length){
-    try{
-      const old=JSON.parse(localStorage.getItem('cvgen-custom-sections-v10')||'[]');
-      old.forEach(addItem);
-    }catch(e){}
-  }
-
-  // Career Objective preview.
-  function renderObjective(){
-    const enabled=q('careerObjectiveEnabled');
-    const text=q('careerObjective')?.value?.trim()||'';
-    const extra=q('careerObjectiveAdditional')?.value?.trim()||'';
-    let node=document.getElementById('careerObjectivePreview');
-    if(!node){
-      node=document.createElement('section');
-      node.id='careerObjectivePreview';
-      node.className='career-objective-preview';
-      const target=cv.querySelector('.cv-top')||cv.firstElementChild;
-      target?.insertAdjacentElement('afterend',node);
-    }
-    if(enabled && enabled.checked && (text||extra)){
-      node.innerHTML='<h3 class="section-title">CAREER OBJECTIVE</h3>'+
-        (text?'<div class="objective-text">'+esc(text)+'</div>':'')+
-        (extra?'<div class="objective-extra">'+esc(extra)+'</div>':'');
-      node.style.display='';
-    }else node.style.display='none';
-  }
-  ['careerObjective','careerObjectiveAdditional','careerObjectiveEnabled'].forEach(id=>{
-    const el=q(id); if(el) el.addEventListener('input',renderObjective);
-    if(el) el.addEventListener('change',renderObjective);
-  });
-
-  // Ensure nationality is available to the personal-information renderer.
-  const nationality=q('nationality');
-  if(nationality){
-    nationality.addEventListener('input',()=>{
-      const target=document.querySelector('[data-field="nationality"]');
-      if(target) target.textContent=nationality.value;
+  if(addCustom){
+    addCustom.addEventListener('click', function(e){
+      e.preventDefault();
+      addCustomSection({});
     });
   }
 
-  renderCustomPreview();
-  renderObjective();
+  if(customList){
+    customList.querySelectorAll(':scope > .custom-editor-item').forEach(wireCustomItem);
+  }
+  renderCustomSections();
+
+  /* ---------- Career Objective ---------- */
+  function renderCareerObjective(){
+    if(!cv) return;
+    const enabled = $('careerObjectiveEnabled');
+    const textEl = $('careerObjective');
+    const extraEl = $('careerObjectiveAdditional');
+
+    const text = textEl ? textEl.value.trim() : '';
+    const extra = extraEl ? extraEl.value.trim() : '';
+    let node = document.getElementById('careerObjectivePreview');
+
+    if(!node){
+      node = document.createElement('section');
+      node.id = 'careerObjectivePreview';
+      node.className = 'career-objective-preview';
+      const first = cv.querySelector('.cv-top') || cv.firstElementChild;
+      if(first) first.insertAdjacentElement('afterend', node);
+      else cv.appendChild(node);
+    }
+
+    node.replaceChildren();
+
+    if(!enabled || !enabled.checked || (!text && !extra)){
+      node.style.display = 'none';
+      return;
+    }
+
+    node.style.display = '';
+    const heading = document.createElement('h3');
+    heading.className = 'section-title';
+    heading.textContent = 'CAREER OBJECTIVE';
+    node.appendChild(heading);
+
+    if(text){
+      const body = document.createElement('div');
+      body.className = 'objective-text';
+      body.textContent = text;
+      node.appendChild(body);
+    }
+    if(extra){
+      const sub = document.createElement('div');
+      sub.className = 'objective-extra';
+      sub.textContent = extra;
+      node.appendChild(sub);
+    }
+  }
+
+  ['careerObjective','careerObjectiveAdditional','careerObjectiveEnabled'].forEach(id=>{
+    const el = $(id);
+    if(el){
+      el.addEventListener('input', renderCareerObjective);
+      el.addEventListener('change', renderCareerObjective);
+    }
+  });
+  renderCareerObjective();
 })();
