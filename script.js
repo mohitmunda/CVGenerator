@@ -78,9 +78,7 @@ function renderSectionOrder(){
  });
 }
 function applySectionOrder(){
- normalizeOrder();
- const cv=$('cv');
- const map={personal:'personalSec',skills:'skillsSec',experience:'experienceSec',education:'educationSec',summary:'summarySec',projects:'projectsSec',certs:'certsSec',achievements:'achievementsSec',hobbies:'hobbiesSec',declaration:'declarationPreview'};
+ normalizeOrder();const cv=$('cv');const map={personal:'personalSec',skills:'skillsSec',experience:'experienceSec',education:'educationSec',summary:'summarySec',projects:'projectsSec',certs:'certsSec',achievements:'achievementsSec',hobbies:'hobbiesSec',declaration:'declarationPreview'};
  sectionOrder.forEach((key,i)=>{
    let el;
    if(map[key]) el=$(map[key]);
@@ -101,17 +99,14 @@ function update(){
  let ed=$('pEducation');ed.innerHTML='';document.querySelectorAll('#education .repeat').forEach(r=>{let q=node(r,'.eq'),i=node(r,'.ei'),custom=readCustom(r.querySelector('.custom-list'));if(!(q||i||custom.length))return;let w=document.createElement('div');w.className='edu';w.innerHTML=`<div><b>${esc(q)}${q&&i?': ':''}</b>${esc(i)}</div>`;[['Board','.eb'],['Aggregate','.ea'],['Stream','.es'],['Passing Year','.ey']].forEach(([l,s])=>{let x=node(r,s);if(x)w.innerHTML+=`<div><b>${l}:</b> ${esc(x)}</div>`});if(custom.length)w.innerHTML+=`<div class="edu-extra">${custom.map(z=>`<div><b>${esc(z.l)}:</b> ${esc(z.v)}</div>`).join('')}</div>`;ed.appendChild(w)});section('educationSec',ed.children.length);
  $('pSummary').textContent=v('summary');section('summarySec',v('summary'));$('pProjects').textContent=v('projects');section('projectsSec',v('projects'));$('pCerts').textContent=v('certs');section('certsSec',v('certs'));$('pAchievements').textContent=v('achievements');section('achievementsSec',v('achievements'));$('pHobbies').textContent=v('hobbies');section('hobbiesSec',v('hobbies'));
  const pc=$('pCustomSections');pc.innerHTML='';document.querySelectorAll('#customSections .custom-section-editor').forEach(r=>{let t=node(r,'.st'),c=node(r,'.sc');if(!t&&!c)return;let s=document.createElement('section');s.className='custom-cv-section';s.dataset.orderKey=r.dataset.orderKey;s.innerHTML=`<h2><span class="secico">${svgIcon('summary')}</span>${esc((t||'ADDITIONAL SECTION').toUpperCase())}</h2><div class="custom-content">${esc(c)}</div>`;r.__preview=s;pc.appendChild(s)});
- const cv=$('cv');
- const preservedDesign=window.getDesignState?window.getDesignState():null;
- cv.className='cv layout-'+(v('layout')||'reference');
- cv.classList.toggle('compact',$('compact').checked);cv.style.fontFamily=v('font')+',Arial,sans-serif';cv.style.setProperty('--accent',v('accent')||'#111');cv.classList.toggle('extended',v('layout')!=='reference'||!!(v('summary')||v('projects')||v('certs')||v('achievements')||v('hobbies')));
- $('pPhoto').className='photo '+v('shape')+' '+v('photoSize');$('pPhoto').style.display=$('hidePhoto').checked?'none':'block';updateIcons();renderSectionOrder();applySectionOrder();if(preservedDesign&&window.applyDesign)window.applyDesign(preservedDesign);saveLocal();
+ const cv=$('cv');cv.className='cv layout-'+(v('layout')||'reference');cv.classList.toggle('compact',$('compact').checked);cv.style.fontFamily=v('font')+',Arial,sans-serif';cv.style.setProperty('--accent',v('accent')||'#111');cv.classList.toggle('extended',v('layout')!=='reference'||!!(v('summary')||v('projects')||v('certs')||v('achievements')||v('hobbies')));
+ $('pPhoto').className='photo '+v('shape')+' '+v('photoSize');$('pPhoto').style.display=$('hidePhoto').checked?'none':'block';updateIcons();renderSectionOrder();applySectionOrder();if(window.__cvApplyDesign)window.__cvApplyDesign();saveLocal();
 }
 $('photo').onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{$('pPhoto').src=r.result;update()};r.readAsDataURL(f)};
 document.addEventListener('input',e=>{if(e.target.matches('input,textarea,select'))update()});document.addEventListener('change',e=>{if(e.target.matches('input,textarea,select'))update()});
-function data(){return {name:v('name'),address:v('address'),phone:v('phone'),email:v('email'),website:v('website'),linkedin:v('linkedin'),github:v('github'),location:v('location'),nationality:v('nationality'),title:v('title'),dob:v('dob'),age:v('age'),father:v('father'),mother:v('mother'),gender:v('gender'),marital:v('marital'),languages:v('languages'),skills:v('skills'),skillDetails:v('skillDetails'),summary:v('summary'),projects:v('projects'),certs:v('certs'),achievements:v('achievements'),hobbies:v('hobbies'),layout:v('layout'),accent:v('accent'),shape:v('shape'),photoSize:v('photoSize'),font:v('font'),iconStyle:v('iconStyle'),compact:$('compact').checked,hidePhoto:$('hidePhoto').checked,basicCustom:readCustom($('basicCustom')),personalCustom:readCustom($('personalCustom')),skillCustom:readCustom($('skillCustom')),exp:[...document.querySelectorAll('#experience .repeat')].map(r=>({t:node(r,'.et'),c:node(r,'.ec'),d:node(r,'.ed'),ex:node(r,'.ex'),custom:readCustom(r.querySelector('.custom-list'))})),edu:[...document.querySelectorAll('#education .repeat')].map(r=>({q:node(r,'.eq'),i:node(r,'.ei'),b:node(r,'.eb'),a:node(r,'.ea'),s:node(r,'.es'),y:node(r,'.ey'),custom:readCustom(r.querySelector('.custom-list'))})),customSections:[...document.querySelectorAll('#customSections .custom-section-editor')].map(r=>({key:r.dataset.orderKey,t:node(r,'.st'),c:node(r,'.sc')})),sectionOrder:sectionOrder.slice(),photoData:$('pPhoto')?.src||'',design:window.getDesignState?window.getDesignState():null}}
+function data(){return {name:v('name'),address:v('address'),phone:v('phone'),email:v('email'),website:v('website'),linkedin:v('linkedin'),github:v('github'),location:v('location'),nationality:v('nationality'),title:v('title'),dob:v('dob'),age:v('age'),father:v('father'),mother:v('mother'),gender:v('gender'),marital:v('marital'),languages:v('languages'),skills:v('skills'),skillDetails:v('skillDetails'),summary:v('summary'),projects:v('projects'),certs:v('certs'),achievements:v('achievements'),hobbies:v('hobbies'),layout:v('layout'),accent:v('accent'),shape:v('shape'),photoSize:v('photoSize'),font:v('font'),iconStyle:v('iconStyle'),compact:$('compact').checked,hidePhoto:$('hidePhoto').checked,basicCustom:readCustom($('basicCustom')),personalCustom:readCustom($('personalCustom')),skillCustom:readCustom($('skillCustom')),exp:[...document.querySelectorAll('#experience .repeat')].map(r=>({t:node(r,'.et'),c:node(r,'.ec'),d:node(r,'.ed'),ex:node(r,'.ex'),custom:readCustom(r.querySelector('.custom-list'))})),edu:[...document.querySelectorAll('#education .repeat')].map(r=>({q:node(r,'.eq'),i:node(r,'.ei'),b:node(r,'.eb'),a:node(r,'.ea'),s:node(r,'.es'),y:node(r,'.ey'),custom:readCustom(r.querySelector('.custom-list'))})),customSections:[...document.querySelectorAll('#customSections .custom-section-editor')].map(r=>({key:r.dataset.orderKey,t:node(r,'.st'),c:node(r,'.sc')})),sectionOrder:sectionOrder.slice(),design:window.__cvDesignGetState?window.__cvDesignGetState():null}}
 function saveLocal(){try{localStorage.setItem('professionalCV',JSON.stringify(data()))}catch(e){}}
-function apply(d){Object.entries(d).forEach(([k,x])=>{if($(k)&&!['exp','edu','basicCustom','personalCustom','skillCustom','customSections','sectionOrder','design','photoData'].includes(k))$(k).type==='checkbox'?$(k).checked=!!x:$(k).value=x??''});['basicCustom','personalCustom','skillCustom'].forEach(k=>{$(k).innerHTML='';(d[k]||[]).forEach(x=>customRow($(k),x))});$('experience').innerHTML='';$('education').innerHTML='';$('customSections').innerHTML='';sectionOrder=Array.isArray(d.sectionOrder)?d.sectionOrder.slice():DEFAULT_SECTION_ORDER.slice();(d.exp||[]).forEach(addExp);(d.edu||[]).forEach(addEdu);(d.customSections||[]).forEach(addSection);normalizeOrder();if(d.photoData&&$('pPhoto'))$('pPhoto').src=d.photoData;update();if(d.design&&window.applyDesign)window.applyDesign(d.design)}
+function apply(d){Object.entries(d).forEach(([k,x])=>{if($(k)&&!['exp','edu','basicCustom','personalCustom','skillCustom','customSections','sectionOrder'].includes(k))$(k).type==='checkbox'?$(k).checked=!!x:$(k).value=x??''});['basicCustom','personalCustom','skillCustom'].forEach(k=>{$(k).innerHTML='';(d[k]||[]).forEach(x=>customRow($(k),x))});$('experience').innerHTML='';$('education').innerHTML='';$('customSections').innerHTML='';sectionOrder=Array.isArray(d.sectionOrder)?d.sectionOrder.slice():DEFAULT_SECTION_ORDER.slice();(d.exp||[]).forEach(addExp);(d.edu||[]).forEach(addEdu);(d.customSections||[]).forEach(addSection);normalizeOrder();if(d.design){try{localStorage.setItem('cvgen-design-v16',JSON.stringify(d.design))}catch(_){}}update();if(d.design&&window.__cvSetDesignState)window.__cvSetDesignState(d.design)}
 $('resetOrder').onclick=()=>{sectionOrder=DEFAULT_SECTION_ORDER.slice();normalizeOrder();update()};
 $('save').onclick=()=>{let b=new Blob([JSON.stringify(data(),null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='cv-data.json';a.click();URL.revokeObjectURL(a.href)};
 $('load').onclick=()=>{let i=document.createElement('input');i.type='file';i.accept='.json';i.onchange=e=>{let r=new FileReader();r.onload=()=>{try{apply(JSON.parse(r.result))}catch(_){alert('Invalid CV data file.')}};r.readAsText(e.target.files[0])};i.click()};
@@ -408,18 +403,13 @@ try{let s=localStorage.getItem('professionalCV');if(s)apply(JSON.parse(s))}catch
 })();
 
 
-/* ===== Version 14 Background & Design Studio ===== */
+/* ===== v16 Background & Design Studio controller ===== */
 (function(){
   'use strict';
-  const cv=document.getElementById('cv');
-  if(!cv) return;
+  const cv=document.getElementById('cv'); if(!cv)return;
   const q=id=>document.getElementById(id);
-  const defaults={
-    mode:'none',scope:'page',color1:'#ffffff',color2:'#eaf2ff',direction:'135deg',
-    pattern:'dots',opacity:1,overlay:true,overlayStrength:.18,imageData:'',imageName:''
-  };
+  const defaults={mode:'none',scope:'page',color1:'#ffffff',color2:'#eaf2ff',direction:'135deg',pattern:'dots',opacity:1,overlay:true,overlayStrength:.18,imageData:'',imageName:''};
   let state=Object.assign({},defaults);
-
   const themes={
     'executive-blue':{mode:'gradient',scope:'page',color1:'#0f3d68',color2:'#eaf3fb',direction:'135deg',overlay:true,overlayStrength:.58},
     'midnight':{mode:'gradient',scope:'page',color1:'#101828',color2:'#344054',direction:'135deg',overlay:true,overlayStrength:.72},
@@ -430,128 +420,68 @@ try{let s=localStorage.getItem('professionalCV');if(s)apply(JSON.parse(s))}catch
     'clean-gradient':{mode:'gradient',scope:'page',color1:'#f8fbff',color2:'#dcecff',direction:'135deg',overlay:true,overlayStrength:.08},
     'creative-portfolio':{mode:'gradient',scope:'top-band',color1:'#c026d3',color2:'#06b6d4',direction:'135deg',overlay:true,overlayStrength:.28}
   };
-
-  function hexToRgb(hex){
-    hex=(hex||'').replace('#','');
-    if(hex.length===3) hex=hex.split('').map(x=>x+x).join('');
-    const n=parseInt(hex,16);
-    if(Number.isNaN(n)) return [255,255,255];
-    return [(n>>16)&255,(n>>8)&255,n&255];
+  const hex=v=>/^#[0-9a-fA-F]{6}$/.test(v||'')?v.toLowerCase():'#ffffff';
+  const rgb=h=>{h=hex(h).slice(1);const n=parseInt(h,16);return[(n>>16)&255,(n>>8)&255,n&255]};
+  const rgba=(h,a)=>{const [r,g,b]=rgb(h);return`rgba(${r},${g},${b},${a})`};
+  const pattern=(k,a,b)=>{
+    const c=rgba(a,.18),d=rgba(b,.16);
+    if(k==='grid')return`linear-gradient(${c} 1px,transparent 1px),linear-gradient(90deg,${c} 1px,transparent 1px)`;
+    if(k==='diagonal')return`repeating-linear-gradient(135deg,${c} 0 1px,transparent 1px 11px)`;
+    if(k==='circles')return`radial-gradient(circle at 20% 20%,${c} 0 18%,transparent 19%),radial-gradient(circle at 80% 75%,${d} 0 15%,transparent 16%)`;
+    if(k==='waves')return`repeating-radial-gradient(ellipse at 0 100%,transparent 0 12px,${c} 13px 14px,transparent 15px 26px)`;
+    return`radial-gradient(circle,${c} 1px,transparent 1.5px)`;
+  };
+  function image(s){
+    if(s.mode==='image'&&s.imageData)return`url("${s.imageData.replace(/"/g,'%22')}")`;
+    if(s.mode==='pattern')return pattern(s.pattern,s.color1,s.color2);
+    if(s.mode==='gradient')return`linear-gradient(${s.direction},${s.color1},${s.color2})`;
+    if(s.mode==='solid')return'none';
+    return'none';
   }
-  function rgba(hex,a){
-    const [r,g,b]=hexToRgb(hex); return `rgba(${r},${g},${b},${a})`;
-  }
-  function normalizeHex(v,fallback){
-    v=(v||'').trim();
-    if(!/^#[0-9a-fA-F]{6}$/.test(v)) return fallback;
-    return v.toLowerCase();
-  }
-  function patternImage(kind,c1,c2){
-    const a=rgba(c1,.20), b=rgba(c2,.18);
-    if(kind==='grid') return `linear-gradient(${a} 1px,transparent 1px),linear-gradient(90deg,${a} 1px,transparent 1px)`;
-    if(kind==='diagonal') return `repeating-linear-gradient(135deg,${a} 0 1px,transparent 1px 11px)`;
-    if(kind==='circles') return `radial-gradient(circle at 20% 20%,${a} 0 18%,transparent 19%),radial-gradient(circle at 80% 75%,${b} 0 15%,transparent 16%)`;
-    if(kind==='waves') return `repeating-radial-gradient(ellipse at 0 100%,transparent 0 12px,${a} 13px 14px,transparent 15px 26px)`;
-    return `radial-gradient(circle,${a} 1px,transparent 1.5px)`;
-  }
-  function baseImage(s){
-    if(s.mode==='image' && s.imageData) return `url("${s.imageData.replace(/"/g,'%22')}")`;
-    if(s.mode==='pattern') return patternImage(s.pattern,s.color1,s.color2);
-    if(s.mode==='gradient') return `linear-gradient(${s.direction},${s.color1},${s.color2})`;
-    if(s.mode==='solid') return `linear-gradient(${s.color1},${s.color1})`;
-    return 'none';
-  }
-  function bgValue(s){return s.mode==='solid'?rgba(s.color1,s.opacity):baseImage(s);}
-  function getDesignState(){ return Object.assign({},state); }
-  window.getDesignState=getDesignState;
-
-  function syncControls(){
-    ['bgMode','bgScope','bgColor1','bgColor2','bgDirection','bgPattern','bgOpacity','bgOverlay','bgOverlayStrength'].forEach(id=>{
-      const el=q(id); if(!el)return;
-      const key={bgMode:'mode',bgScope:'scope',bgColor1:'color1',bgColor2:'color2',bgDirection:'direction',bgPattern:'pattern',bgOpacity:'opacity',bgOverlay:'overlay',bgOverlayStrength:'overlayStrength'}[id];
-      if(el.type==='checkbox') el.checked=!!state[key]; else el.value=state[key];
-    });
-    const c1=q('bgColor1Text'),c2=q('bgColor2Text');
-    if(c1)c1.value=state.color1;if(c2)c2.value=state.color2;
+  function stateForData(){return Object.assign({},state)}
+  window.__cvDesignState=stateForData;
+  function sync(){
+    const map={bgMode:'mode',bgScope:'scope',bgColor1:'color1',bgColor2:'color2',bgDirection:'direction',bgPattern:'pattern',bgOpacity:'opacity',bgOverlay:'overlay',bgOverlayStrength:'overlayStrength'};
+    Object.keys(map).forEach(id=>{const e=q(id),k=map[id];if(!e)return;if(e.type==='checkbox')e.checked=!!state[k];else e.value=state[k]});
+    if(q('bgColor1Text'))q('bgColor1Text').value=state.color1;
+    if(q('bgColor2Text'))q('bgColor2Text').value=state.color2;
     if(q('bgOpacityValue'))q('bgOpacityValue').textContent=Math.round(state.opacity*100)+'%';
     if(q('bgOverlayValue'))q('bgOverlayValue').textContent=Math.round(state.overlayStrength*100)+'%';
     if(q('backgroundImageName'))q('backgroundImageName').textContent=state.imageName||'No image selected';
   }
-  function clearClasses(){
+  function apply(){
     cv.classList.remove('design-active','design-scope-page','design-scope-header','design-scope-top-band','design-has-overlay');
-    cv.style.removeProperty('--cv-bg');cv.style.removeProperty('--cv-bg-image');cv.style.removeProperty('--cv-overlay');
-  }
-  function applyDesign(s){
-    state=Object.assign({},defaults,s||{});
-    state.opacity=Math.max(.1,Math.min(1,Number(state.opacity)||1));
-    state.overlayStrength=Math.max(0,Math.min(.65,Number(state.overlayStrength)||0));
-    state.color1=normalizeHex(state.color1,defaults.color1);
-    state.color2=normalizeHex(state.color2,defaults.color2);
-    clearClasses();
-    if(state.mode==='none'){syncControls();return;}
+    cv.style.removeProperty('--cv-bg-color');cv.style.removeProperty('--cv-bg-image');cv.style.removeProperty('--cv-overlay');
+    if(state.mode==='none'){sync();return}
     cv.classList.add('design-active','design-scope-'+state.scope);
-    if(state.overlay) cv.classList.add('design-has-overlay');
+    if(state.overlay)cv.classList.add('design-has-overlay');
     cv.style.setProperty('--cv-bg-color',state.mode==='solid'?rgba(state.color1,state.opacity):'transparent');
-    cv.style.setProperty('--cv-bg-image',state.mode==='solid'?'none':baseImage(state));
+    cv.style.setProperty('--cv-bg-image',image(state));
     cv.style.setProperty('--cv-overlay',`rgba(255,255,255,${state.overlayStrength})`);
-    syncControls();
-    document.querySelectorAll('.theme-card').forEach(x=>x.classList.remove('active'));
+    sync();
   }
-  window.applyDesign=applyDesign;
-
-  function updateFromControls(){
-    state.mode=q('bgMode')?.value||'none';
-    state.scope=q('bgScope')?.value||'page';
-    state.color1=normalizeHex(q('bgColor1')?.value,state.color1);
-    state.color2=normalizeHex(q('bgColor2')?.value,state.color2);
-    state.direction=q('bgDirection')?.value||state.direction;
-    state.pattern=q('bgPattern')?.value||state.pattern;
-    state.opacity=Number(q('bgOpacity')?.value||1);
-    state.overlay=!!q('bgOverlay')?.checked;
-    state.overlayStrength=Number(q('bgOverlayStrength')?.value||0);
-    applyDesign(state);
-    try{localStorage.setItem('cvgen-design-v14',JSON.stringify(state))}catch(e){}
+  window.__cvApplyDesign=apply;
+  window.__cvDesignGetState=stateForData;
+  window.__cvSetDesignState=function(s){state=Object.assign({},defaults,s||{});apply();};
+  function update(){
+    state.mode=q('bgMode')?.value||'none';state.scope=q('bgScope')?.value||'page';
+    state.color1=hex(q('bgColor1')?.value||state.color1);state.color2=hex(q('bgColor2')?.value||state.color2);
+    state.direction=q('bgDirection')?.value||state.direction;state.pattern=q('bgPattern')?.value||state.pattern;
+    state.opacity=Number(q('bgOpacity')?.value||1);state.overlay=!!q('bgOverlay')?.checked;state.overlayStrength=Number(q('bgOverlayStrength')?.value||0);
+    apply();try{localStorage.setItem('cvgen-design-v16',JSON.stringify(state))}catch(e){}
   }
-  function bind(id,ev='input'){
-    const el=q(id); if(el)el.addEventListener(ev,updateFromControls);
-  }
-  ['bgMode','bgScope','bgColor1','bgColor2','bgDirection','bgPattern','bgOpacity','bgOverlay','bgOverlayStrength'].forEach(id=>bind(id));
-  const c1=q('bgColor1Text'),c2=q('bgColor2Text');
-  if(c1)c1.addEventListener('change',()=>{state.color1=normalizeHex(c1.value,state.color1);applyDesign(state);try{localStorage.setItem('cvgen-design-v14',JSON.stringify(state))}catch(e){}});
-  if(c2)c2.addEventListener('change',()=>{state.color2=normalizeHex(c2.value,state.color2);applyDesign(state);try{localStorage.setItem('cvgen-design-v14',JSON.stringify(state))}catch(e){}});
-  const img=q('backgroundImage');
-  if(img)img.addEventListener('change',()=>{
-    const file=img.files?.[0]; if(!file)return;
-    const reader=new FileReader();
-    reader.onload=()=>{state.imageData=reader.result;state.imageName=file.name;state.mode='image';applyDesign(state);try{localStorage.setItem('cvgen-design-v14',JSON.stringify(state))}catch(e){}};
-    reader.readAsDataURL(file);
+  ['bgMode','bgScope','bgColor1','bgColor2','bgDirection','bgPattern','bgOpacity','bgOverlay','bgOverlayStrength'].forEach(id=>q(id)?.addEventListener('input',update));
+  ['bgMode','bgScope','bgColor1','bgColor2','bgDirection','bgPattern','bgOpacity','bgOverlay','bgOverlayStrength'].forEach(id=>q(id)?.addEventListener('change',update));
+  q('bgColor1Text')?.addEventListener('change',()=>{state.color1=hex(q('bgColor1Text').value);apply()});
+  q('bgColor2Text')?.addEventListener('change',()=>{state.color2=hex(q('bgColor2Text').value);apply()});
+  q('backgroundImage')?.addEventListener('change',e=>{
+    const f=e.target.files?.[0];if(!f)return;
+    const r=new FileReader();r.onload=()=>{state.mode='image';state.imageData=r.result;state.imageName=f.name;apply();try{localStorage.setItem('cvgen-design-v16',JSON.stringify(state))}catch(_){}};
+    r.readAsDataURL(f);
   });
-  const clearImg=q('clearBackgroundImage');
-  if(clearImg)clearImg.onclick=()=>{state.imageData='';state.imageName='';if(img)img.value='';if(state.mode==='image')state.mode='none';applyDesign(state);try{localStorage.setItem('cvgen-design-v14',JSON.stringify(state))}catch(e){}};
-  const reset=q('resetDesign');
-  if(reset)reset.onclick=()=>{state=Object.assign({},defaults);applyDesign(state);try{localStorage.removeItem('cvgen-design-v14')}catch(e){}};
-  document.querySelectorAll('.theme-card').forEach(card=>card.addEventListener('click',()=>{
-    const t=themes[card.dataset.theme]; if(!t)return;
-    state=Object.assign({},defaults,t);applyDesign(state);
-    try{localStorage.setItem('cvgen-design-v14',JSON.stringify(state))}catch(e){}
-    card.classList.add('active');
-  }));
-
-  try{
-    const saved=JSON.parse(localStorage.getItem('cvgen-design-v14')||'null');
-    if(saved)applyDesign(saved); else applyDesign(defaults);
-  }catch(e){applyDesign(defaults)}
-
-  // Keep design included when the app's existing JSON Save/Load system runs.
-  window.addEventListener('beforeprint',()=>{document.documentElement.classList.toggle('print-backgrounds',!!q('printBackground')?.checked)});
-})();
-
-/* ===== v15 final boot fix ===== */
-(function(){
-  const cv=document.getElementById('cv');
-  if(!cv) return;
-  try{
-    const saved=JSON.parse(localStorage.getItem('cvgen-design-v14')||'null');
-    if(saved && window.applyDesign) window.applyDesign(saved);
-  }catch(e){}
+  q('clearBackgroundImage')?.addEventListener('click',()=>{state.imageData='';state.imageName='';if(q('backgroundImage'))q('backgroundImage').value='';state.mode='none';apply();try{localStorage.removeItem('cvgen-design-v16')}catch(_){}});
+  q('resetDesign')?.addEventListener('click',()=>{state=Object.assign({},defaults);apply();try{localStorage.removeItem('cvgen-design-v16')}catch(_){}});
+  document.querySelectorAll('.theme-card').forEach(card=>card.addEventListener('click',()=>{state=Object.assign({},defaults,themes[card.dataset.theme]||{});apply();try{localStorage.setItem('cvgen-design-v16',JSON.stringify(state))}catch(_){};}));
+  try{const saved=JSON.parse(localStorage.getItem('cvgen-design-v16')||'null');if(saved)state=Object.assign({},defaults,saved)}catch(_){}
+  apply();
 })();

@@ -140,12 +140,23 @@ Photography</textarea></label><label>Additional Details<textarea id="skillDetail
     <input id="careerObjectiveAdditional" type="text" placeholder="Optional subtitle / focus area">
   </div>
 </section>
-<section class="panel"><div class="section-head"><div><h2>6. Arrange CV Sections</h2><p>Drag sections or use the ↑ ↓ buttons to change their order. The order is saved with your CV data.</p></div><button class="add" type="button" id="resetOrder">Reset Order</button></div>
+<section class="panel">
+    <div class="section-head"><div><h2>6. Optional Sections</h2><p>Fill only what you need. Empty sections stay hidden.</p></div><button class="add" id="addCustomSection">+ Add Section</button></div>
+    <label>Professional Summary<textarea id="summary" rows="3" placeholder="Short professional summary..."></textarea></label>
+    <label>Projects<textarea id="projects" rows="3" placeholder="Project — description — technology"></textarea></label>
+    <label>Certifications & Training<textarea id="certs" rows="3" placeholder="Certificate — Issuer — Year"></textarea></label>
+    <label>Achievements<textarea id="achievements" rows="3" placeholder="One per line"></textarea></label>
+    <label>Hobbies & Interests<textarea id="hobbies" rows="2" placeholder="One per line"></textarea></label>
+    <div id="customSections"></div>
+  </section>
+
+  <section class="panel">
+    <div class="section-head"><div><h2>7. Arrange CV Sections</h2><p>Drag sections or use the ↑ ↓ buttons to change their order. The order is saved with your CV data.</p></div><button class="add" type="button" id="resetOrder">Reset Order</button></div>
     <div id="sectionOrder" class="section-order"></div>
   </section>
 
   <section class="panel">
-    <h2>7. Layout & Design</h2>
+    <h2>8. Layout & Design</h2>
     <div class="two">
       <label>Layout<select id="layout" name="layout" class="layout-select">
 <option value="reference">Reference Pro — Default</option>
@@ -236,16 +247,13 @@ Photography</textarea></label><label>Additional Details<textarea id="skillDetail
 <template id="customTpl"><div class="custom-row"><input class="cl" placeholder="Label"><input class="cvv" placeholder="Value"><button type="button" class="remove">×</button></div></template>
 <template id="expTpl"><div class="repeat"><div class="repeat-title"><b>Experience</b><button type="button" class="remove">Remove</button></div><div class="two"><label>Job / Role<input class="et"></label><label>Company<input class="ec"></label></div><label>Duration<input class="ed"></label><label>Description<textarea class="ex" rows="2"></textarea></label><div class="subhead"><b>Additional Options</b><button type="button" class="mini add-custom" data-target="__EXP__">+ Add</button></div><div class="custom-list" data-custom="exp"></div></div></template>
 <template id="eduTpl"><div class="repeat"><div class="repeat-title"><b>Education</b><button type="button" class="remove">Remove</button></div><div class="two"><label>Qualification<input class="eq"></label><label>Institution<input class="ei"></label></div><div class="two"><label>Board / University<input class="eb"></label><label>Aggregate<input class="ea"></label></div><div class="two"><label>Stream<input class="es"></label><label>Passing Year<input class="ey"></label></div><div class="subhead"><b>Additional Options</b><button type="button" class="mini add-custom" data-target="__EDU__">+ Add</button></div><div class="custom-list" data-custom="edu"></div></div></template>
-<div id="customSections" hidden></div>
+<template id="sectionTpl"><div class="repeat custom-section-editor"><div class="repeat-title"><b>Custom Section</b><button type="button" class="remove">Remove</button></div><label>Section Title<input class="st" placeholder="e.g. References, Publications, Volunteer Work"></label><label>Content<textarea class="sc" rows="3"></textarea></label></div></template>
 <script src="script.js"></script>
 
 
 <section class="design-studio" id="designStudio">
   <div class="design-head">
-    <div>
-      <h3>Background & Design Studio</h3>
-      <p>Optional styling only — the default CV stays clean white.</p>
-    </div>
+    <div><h3>Background & Design Studio</h3><p>Optional styling. The default CV remains clean white.</p></div>
     <button type="button" id="resetDesign">Reset Design</button>
   </div>
 
@@ -288,44 +296,31 @@ Photography</textarea></label><label>Additional Details<textarea id="skillDetail
     </label>
     <label>Gradient direction
       <select id="bgDirection">
-        <option value="135deg">Diagonal ↘</option>
-        <option value="90deg">Left → Right</option>
-        <option value="180deg">Top → Bottom</option>
-        <option value="45deg">Diagonal ↗</option>
-        <option value="0deg">Bottom → Top</option>
+        <option value="135deg">Diagonal ↘</option><option value="90deg">Left → Right</option>
+        <option value="180deg">Top → Bottom</option><option value="45deg">Diagonal ↗</option><option value="0deg">Bottom → Top</option>
       </select>
     </label>
     <label>Pattern
-      <select id="bgPattern">
-        <option value="dots">Minimal dots</option>
-        <option value="grid">Fine grid</option>
-        <option value="diagonal">Diagonal lines</option>
-        <option value="circles">Soft circles</option>
-        <option value="waves">Wave lines</option>
-      </select>
+      <select id="bgPattern"><option value="dots">Minimal dots</option><option value="grid">Fine grid</option><option value="diagonal">Diagonal lines</option><option value="circles">Soft circles</option><option value="waves">Wave lines</option></select>
     </label>
     <label>Background opacity
-      <input id="bgOpacity" type="range" min="0.1" max="1" step="0.05" value="1">
-      <span class="range-value" id="bgOpacityValue">100%</span>
+      <input id="bgOpacity" type="range" min="0.1" max="1" step="0.05" value="1"><span class="range-value" id="bgOpacityValue">100%</span>
     </label>
-    <label>Overlay for readability
+    <label>Readability overlay
       <span class="switch"><input type="checkbox" id="bgOverlay" checked><span>Use</span></span>
     </label>
     <label>Overlay strength
-      <input id="bgOverlayStrength" type="range" min="0" max="0.65" step="0.05" value="0.18">
-      <span class="range-value" id="bgOverlayValue">18%</span>
+      <input id="bgOverlayStrength" type="range" min="0" max="0.65" step="0.05" value="0.18"><span class="range-value" id="bgOverlayValue">18%</span>
     </label>
   </div>
 
   <div class="design-image-row">
     <label class="upload-field">Custom background image
-      <input type="file" id="backgroundImage" accept="image/*">
-      <small id="backgroundImageName">No image selected</small>
+      <input type="file" id="backgroundImage" accept="image/*"><small id="backgroundImageName">No image selected</small>
     </label>
     <button type="button" id="clearBackgroundImage">Remove image</button>
   </div>
-
-  <p class="design-note">Background styling is inactive when “None — original white” is selected. Backgrounds are included in Print/PDF when “Print background graphics” is enabled.</p>
+  <p class="design-note">No background is applied until you select a background type or a theme. Print/PDF uses the existing “Print background graphics” setting.</p>
 </section>
 
 <section class="pro-tools" id="proTools">
