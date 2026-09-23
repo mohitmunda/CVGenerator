@@ -95,9 +95,9 @@ function update(){
 }
 $('photo').onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{$('pPhoto').src=r.result;update()};r.readAsDataURL(f)};
 document.addEventListener('input',e=>{if(e.target.matches('input,textarea,select'))update()});document.addEventListener('change',e=>{if(e.target.matches('input,textarea,select'))update()});
-function data(){return {name:v('name'),address:v('address'),phone:v('phone'),email:v('email'),website:v('website'),linkedin:v('linkedin'),github:v('github'),location:v('location'),nationality:v('nationality'),title:v('title'),dob:v('dob'),age:v('age'),father:v('father'),mother:v('mother'),gender:v('gender'),marital:v('marital'),languages:v('languages'),skills:v('skills'),skillDetails:v('skillDetails'),summary:v('summary'),projects:v('projects'),certs:v('certs'),achievements:v('achievements'),hobbies:v('hobbies'),layout:v('layout'),accent:v('accent'),shape:v('shape'),photoSize:v('photoSize'),font:v('font'),iconStyle:v('iconStyle'),compact:$('compact').checked,hidePhoto:$('hidePhoto').checked,basicCustom:readCustom($('basicCustom')),personalCustom:readCustom($('personalCustom')),skillCustom:readCustom($('skillCustom')),exp:[...document.querySelectorAll('#experience .repeat')].map(r=>({t:node(r,'.et'),c:node(r,'.ec'),d:node(r,'.ed'),ex:node(r,'.ex'),custom:readCustom(r.querySelector('.custom-list'))})),edu:[...document.querySelectorAll('#education .repeat')].map(r=>({q:node(r,'.eq'),i:node(r,'.ei'),b:node(r,'.eb'),a:node(r,'.ea'),s:node(r,'.es'),y:node(r,'.ey'),custom:readCustom(r.querySelector('.custom-list'))})),customSections:[...document.querySelectorAll('#customSections .custom-section-editor')].map(r=>({key:r.dataset.orderKey,t:node(r,'.st'),c:node(r,'.sc')})),sectionOrder:sectionOrder.slice()}}
+function data(){return {name:v('name'),address:v('address'),phone:v('phone'),email:v('email'),website:v('website'),linkedin:v('linkedin'),github:v('github'),location:v('location'),nationality:v('nationality'),title:v('title'),dob:v('dob'),age:v('age'),father:v('father'),mother:v('mother'),gender:v('gender'),marital:v('marital'),languages:v('languages'),skills:v('skills'),skillDetails:v('skillDetails'),summary:v('summary'),projects:v('projects'),certs:v('certs'),achievements:v('achievements'),hobbies:v('hobbies'),layout:v('layout'),accent:v('accent'),shape:v('shape'),photoSize:v('photoSize'),font:v('font'),iconStyle:v('iconStyle'),compact:$('compact').checked,hidePhoto:$('hidePhoto').checked,basicCustom:readCustom($('basicCustom')),personalCustom:readCustom($('personalCustom')),skillCustom:readCustom($('skillCustom')),exp:[...document.querySelectorAll('#experience .repeat')].map(r=>({t:node(r,'.et'),c:node(r,'.ec'),d:node(r,'.ed'),ex:node(r,'.ex'),custom:readCustom(r.querySelector('.custom-list'))})),edu:[...document.querySelectorAll('#education .repeat')].map(r=>({q:node(r,'.eq'),i:node(r,'.ei'),b:node(r,'.eb'),a:node(r,'.ea'),s:node(r,'.es'),y:node(r,'.ey'),custom:readCustom(r.querySelector('.custom-list'))})),customSections:[...document.querySelectorAll('#customSections .custom-section-editor')].map(r=>({key:r.dataset.orderKey,t:node(r,'.st'),c:node(r,'.sc')})),sectionOrder:sectionOrder.slice(),design:getDesignState()}}
 function saveLocal(){try{localStorage.setItem('professionalCV',JSON.stringify(data()))}catch(e){}}
-function apply(d){Object.entries(d).forEach(([k,x])=>{if($(k)&&!['exp','edu','basicCustom','personalCustom','skillCustom','customSections','sectionOrder'].includes(k))$(k).type==='checkbox'?$(k).checked=!!x:$(k).value=x??''});['basicCustom','personalCustom','skillCustom'].forEach(k=>{$(k).innerHTML='';(d[k]||[]).forEach(x=>customRow($(k),x))});$('experience').innerHTML='';$('education').innerHTML='';$('customSections').innerHTML='';sectionOrder=Array.isArray(d.sectionOrder)?d.sectionOrder.slice():DEFAULT_SECTION_ORDER.slice();(d.exp||[]).forEach(addExp);(d.edu||[]).forEach(addEdu);(d.customSections||[]).forEach(addSection);normalizeOrder();update()}
+function apply(d){Object.entries(d).forEach(([k,x])=>{if($(k)&&!['exp','edu','basicCustom','personalCustom','skillCustom','customSections','sectionOrder'].includes(k))$(k).type==='checkbox'?$(k).checked=!!x:$(k).value=x??''});['basicCustom','personalCustom','skillCustom'].forEach(k=>{$(k).innerHTML='';(d[k]||[]).forEach(x=>customRow($(k),x))});$('experience').innerHTML='';$('education').innerHTML='';$('customSections').innerHTML='';sectionOrder=Array.isArray(d.sectionOrder)?d.sectionOrder.slice():DEFAULT_SECTION_ORDER.slice();(d.exp||[]).forEach(addExp);(d.edu||[]).forEach(addEdu);(d.customSections||[]).forEach(addSection);normalizeOrder();update();if(d.design)applyDesign(d.design)}
 $('resetOrder').onclick=()=>{sectionOrder=DEFAULT_SECTION_ORDER.slice();normalizeOrder();update()};
 $('save').onclick=()=>{let b=new Blob([JSON.stringify(data(),null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='cv-data.json';a.click();URL.revokeObjectURL(a.href)};
 $('load').onclick=()=>{let i=document.createElement('input');i.type='file';i.accept='.json';i.onchange=e=>{let r=new FileReader();r.onload=()=>{try{apply(JSON.parse(r.result))}catch(_){alert('Invalid CV data file.')}};r.readAsText(e.target.files[0])};i.click()};
@@ -110,7 +110,7 @@ try{let s=localStorage.getItem('professionalCV');if(s)apply(JSON.parse(s))}catch
   const cv = document.querySelector('.cv');
   const cards = document.querySelectorAll('[data-layout-card]');
   if(!cv) return;
-  const names = ['reference','classic','modern','executive','sidebar','minimal','elegant','corporate'];
+  const names = ['reference','classic','modern','executive','minimal','elegant','corporate'];
   function applyLayout(v){
     if(!names.includes(v)) v='reference';
     names.forEach(n=>cv.classList.remove('layout-'+n));
@@ -310,4 +310,224 @@ try{let s=localStorage.getItem('professionalCV');if(s)apply(JSON.parse(s))}catch
     }
   });
   renderDeclaration();
+})();
+
+/* ===== Version 13: visible Nationality + bottom Declaration ===== */
+(function(){
+  'use strict';
+  const $ = id => document.getElementById(id);
+  const cv = document.querySelector('.cv');
+  if(!cv) return;
+
+  function updateNationality(){
+    const input = $('nationality');
+    const value = input ? input.value.trim() : '';
+    document.querySelectorAll('[data-field="nationality"]').forEach(el=>{
+      el.textContent = value;
+      const row = el.closest('[data-nationality-row]');
+      if(row) row.style.display = value ? 'grid' : 'none';
+    });
+  }
+
+  function renderDeclaration(){
+    const host = $('declarationPreview');
+    if(!host) return;
+    const enabled = $('declarationEnabled');
+    const text = $('declarationText')?.value.trim() || '';
+    const place = $('declarationPlace')?.value.trim() || '';
+    const date = $('declarationDate')?.value.trim() || '';
+    const signature = $('declarationSignature')?.value.trim() || '';
+
+    host.replaceChildren();
+
+    if(!enabled || !enabled.checked || (!text && !place && !date && !signature)){
+      host.style.display='none';
+      return;
+    }
+
+    host.style.display='';
+    const title=document.createElement('h3');
+    title.className='section-title';
+    title.textContent='DECLARATION';
+    host.appendChild(title);
+
+    if(text){
+      const body=document.createElement('div');
+      body.className='declaration-text';
+      body.textContent=text;
+      host.appendChild(body);
+    }
+
+    if(place || date || signature){
+      const meta=document.createElement('div');
+      meta.className='declaration-meta-preview';
+
+      [['Place',place],['Date',date],['Signature',signature]].forEach(([label,value])=>{
+        if(value){
+          const item=document.createElement('div');
+          const strong=document.createElement('strong');
+          strong.textContent=label+': ';
+          item.appendChild(strong);
+          item.appendChild(document.createTextNode(value));
+          meta.appendChild(item);
+        }
+      });
+      host.appendChild(meta);
+    }
+  }
+
+  const nat=$('nationality');
+  if(nat){
+    nat.addEventListener('input',updateNationality);
+    nat.addEventListener('change',updateNationality);
+  }
+  updateNationality();
+
+  ['declarationEnabled','declarationText','declarationPlace','declarationDate','declarationSignature'].forEach(id=>{
+    const el=$(id);
+    if(el){
+      el.addEventListener('input',renderDeclaration);
+      el.addEventListener('change',renderDeclaration);
+    }
+  });
+  renderDeclaration();
+})();
+
+
+/* ===== Version 14 Background & Design Studio ===== */
+(function(){
+  'use strict';
+  const cv=document.getElementById('cv');
+  if(!cv) return;
+  const q=id=>document.getElementById(id);
+  const defaults={
+    mode:'none',scope:'page',color1:'#ffffff',color2:'#eaf2ff',direction:'135deg',
+    pattern:'dots',opacity:1,overlay:true,overlayStrength:.18,imageData:'',imageName:''
+  };
+  let state=Object.assign({},defaults);
+
+  const themes={
+    'executive-blue':{mode:'gradient',scope:'page',color1:'#0f3d68',color2:'#eaf3fb',direction:'135deg',overlay:true,overlayStrength:.58},
+    'midnight':{mode:'gradient',scope:'page',color1:'#101828',color2:'#344054',direction:'135deg',overlay:true,overlayStrength:.72},
+    'modern-teal':{mode:'gradient',scope:'page',color1:'#0f766e',color2:'#dff8f4',direction:'135deg',overlay:true,overlayStrength:.42},
+    'royal-purple':{mode:'gradient',scope:'page',color1:'#5b21b6',color2:'#eee7ff',direction:'135deg',overlay:true,overlayStrength:.48},
+    'elegant-gold':{mode:'gradient',scope:'header',color1:'#8a6a22',color2:'#fff7df',direction:'135deg',overlay:true,overlayStrength:.35},
+    'corporate-slate':{mode:'gradient',scope:'page',color1:'#344054',color2:'#eef1f4',direction:'135deg',overlay:true,overlayStrength:.48},
+    'clean-gradient':{mode:'gradient',scope:'page',color1:'#f8fbff',color2:'#dcecff',direction:'135deg',overlay:true,overlayStrength:.08},
+    'creative-portfolio':{mode:'gradient',scope:'top-band',color1:'#c026d3',color2:'#06b6d4',direction:'135deg',overlay:true,overlayStrength:.28}
+  };
+
+  function hexToRgb(hex){
+    hex=(hex||'').replace('#','');
+    if(hex.length===3) hex=hex.split('').map(x=>x+x).join('');
+    const n=parseInt(hex,16);
+    if(Number.isNaN(n)) return [255,255,255];
+    return [(n>>16)&255,(n>>8)&255,n&255];
+  }
+  function rgba(hex,a){
+    const [r,g,b]=hexToRgb(hex); return `rgba(${r},${g},${b},${a})`;
+  }
+  function normalizeHex(v,fallback){
+    v=(v||'').trim();
+    if(!/^#[0-9a-fA-F]{6}$/.test(v)) return fallback;
+    return v.toLowerCase();
+  }
+  function patternImage(kind,c1,c2){
+    const a=rgba(c1,.20), b=rgba(c2,.18);
+    if(kind==='grid') return `linear-gradient(${a} 1px,transparent 1px),linear-gradient(90deg,${a} 1px,transparent 1px)`;
+    if(kind==='diagonal') return `repeating-linear-gradient(135deg,${a} 0 1px,transparent 1px 11px)`;
+    if(kind==='circles') return `radial-gradient(circle at 20% 20%,${a} 0 18%,transparent 19%),radial-gradient(circle at 80% 75%,${b} 0 15%,transparent 16%)`;
+    if(kind==='waves') return `repeating-radial-gradient(ellipse at 0 100%,transparent 0 12px,${a} 13px 14px,transparent 15px 26px)`;
+    return `radial-gradient(circle,${a} 1px,transparent 1.5px)`;
+  }
+  function baseImage(s){
+    if(s.mode==='image' && s.imageData) return `url("${s.imageData.replace(/"/g,'%22')}")`;
+    if(s.mode==='pattern') return patternImage(s.pattern,s.color1,s.color2);
+    if(s.mode==='gradient') return `linear-gradient(${s.direction},${s.color1},${s.color2})`;
+    if(s.mode==='solid') return `linear-gradient(${s.color1},${s.color1})`;
+    return 'none';
+  }
+  function bgValue(s){return s.mode==='solid'?rgba(s.color1,s.opacity):baseImage(s);}
+  function getDesignState(){ return Object.assign({},state); }
+  window.getDesignState=getDesignState;
+
+  function syncControls(){
+    ['bgMode','bgScope','bgColor1','bgColor2','bgDirection','bgPattern','bgOpacity','bgOverlay','bgOverlayStrength'].forEach(id=>{
+      const el=q(id); if(!el)return;
+      const key={bgMode:'mode',bgScope:'scope',bgColor1:'color1',bgColor2:'color2',bgDirection:'direction',bgPattern:'pattern',bgOpacity:'opacity',bgOverlay:'overlay',bgOverlayStrength:'overlayStrength'}[id];
+      if(el.type==='checkbox') el.checked=!!state[key]; else el.value=state[key];
+    });
+    const c1=q('bgColor1Text'),c2=q('bgColor2Text');
+    if(c1)c1.value=state.color1;if(c2)c2.value=state.color2;
+    if(q('bgOpacityValue'))q('bgOpacityValue').textContent=Math.round(state.opacity*100)+'%';
+    if(q('bgOverlayValue'))q('bgOverlayValue').textContent=Math.round(state.overlayStrength*100)+'%';
+    if(q('backgroundImageName'))q('backgroundImageName').textContent=state.imageName||'No image selected';
+  }
+  function clearClasses(){
+    cv.classList.remove('design-active','design-scope-page','design-scope-header','design-scope-top-band','design-has-overlay');
+    cv.style.removeProperty('--cv-bg');cv.style.removeProperty('--cv-bg-image');cv.style.removeProperty('--cv-overlay');
+  }
+  function applyDesign(s){
+    state=Object.assign({},defaults,s||{});
+    state.opacity=Math.max(.1,Math.min(1,Number(state.opacity)||1));
+    state.overlayStrength=Math.max(0,Math.min(.65,Number(state.overlayStrength)||0));
+    state.color1=normalizeHex(state.color1,defaults.color1);
+    state.color2=normalizeHex(state.color2,defaults.color2);
+    clearClasses();
+    if(state.mode==='none'){syncControls();return;}
+    cv.classList.add('design-active','design-scope-'+state.scope);
+    if(state.overlay) cv.classList.add('design-has-overlay');
+    cv.style.setProperty('--cv-bg',bgValue(state));
+    cv.style.setProperty('--cv-bg-image',baseImage(state));
+    cv.style.setProperty('--cv-overlay',`rgba(255,255,255,${state.overlayStrength})`);
+    syncControls();
+    document.querySelectorAll('.theme-card').forEach(x=>x.classList.remove('active'));
+  }
+  window.applyDesign=applyDesign;
+
+  function updateFromControls(){
+    state.mode=q('bgMode')?.value||'none';
+    state.scope=q('bgScope')?.value||'page';
+    state.color1=normalizeHex(q('bgColor1')?.value,state.color1);
+    state.color2=normalizeHex(q('bgColor2')?.value,state.color2);
+    state.direction=q('bgDirection')?.value||state.direction;
+    state.pattern=q('bgPattern')?.value||state.pattern;
+    state.opacity=Number(q('bgOpacity')?.value||1);
+    state.overlay=!!q('bgOverlay')?.checked;
+    state.overlayStrength=Number(q('bgOverlayStrength')?.value||0);
+    applyDesign(state);
+    try{localStorage.setItem('cvgen-design-v14',JSON.stringify(state))}catch(e){}
+  }
+  function bind(id,ev='input'){
+    const el=q(id); if(el)el.addEventListener(ev,updateFromControls);
+  }
+  ['bgMode','bgScope','bgColor1','bgColor2','bgDirection','bgPattern','bgOpacity','bgOverlay','bgOverlayStrength'].forEach(id=>bind(id));
+  const c1=q('bgColor1Text'),c2=q('bgColor2Text');
+  if(c1)c1.addEventListener('change',()=>{state.color1=normalizeHex(c1.value,state.color1);applyDesign(state);try{localStorage.setItem('cvgen-design-v14',JSON.stringify(state))}catch(e){}});
+  if(c2)c2.addEventListener('change',()=>{state.color2=normalizeHex(c2.value,state.color2);applyDesign(state);try{localStorage.setItem('cvgen-design-v14',JSON.stringify(state))}catch(e){}});
+  const img=q('backgroundImage');
+  if(img)img.addEventListener('change',()=>{
+    const file=img.files?.[0]; if(!file)return;
+    const reader=new FileReader();
+    reader.onload=()=>{state.imageData=reader.result;state.imageName=file.name;state.mode='image';applyDesign(state);try{localStorage.setItem('cvgen-design-v14',JSON.stringify(state))}catch(e){}};
+    reader.readAsDataURL(file);
+  });
+  const clearImg=q('clearBackgroundImage');
+  if(clearImg)clearImg.onclick=()=>{state.imageData='';state.imageName='';if(img)img.value='';if(state.mode==='image')state.mode='none';applyDesign(state);try{localStorage.setItem('cvgen-design-v14',JSON.stringify(state))}catch(e){}};
+  const reset=q('resetDesign');
+  if(reset)reset.onclick=()=>{state=Object.assign({},defaults);applyDesign(state);try{localStorage.removeItem('cvgen-design-v14')}catch(e){}};
+  document.querySelectorAll('.theme-card').forEach(card=>card.addEventListener('click',()=>{
+    const t=themes[card.dataset.theme]; if(!t)return;
+    state=Object.assign({},defaults,t);applyDesign(state);
+    try{localStorage.setItem('cvgen-design-v14',JSON.stringify(state))}catch(e){}
+    card.classList.add('active');
+  }));
+
+  try{
+    const saved=JSON.parse(localStorage.getItem('cvgen-design-v14')||'null');
+    if(saved)applyDesign(saved); else applyDesign(defaults);
+  }catch(e){applyDesign(defaults)}
+
+  // Keep design included when the app's existing JSON Save/Load system runs.
+  window.addEventListener('beforeprint',()=>{document.documentElement.classList.toggle('print-backgrounds',!!q('printBackground')?.checked)});
 })();

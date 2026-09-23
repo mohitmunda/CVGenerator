@@ -87,3 +87,26 @@ Font selection is stored locally in the browser and can be changed independently
 - Added a Declaration section that is always the final CV section.
 - Declaration supports text, place, date, and signature/name.
 - Rebuilt Sidebar layout using a fixed A4 content box and stable inner padding so text remains aligned and inside the printable page.
+
+
+## Version 13 — Final Layout Update
+- Removed Sidebar Layout from the available layout choices.
+- Nationality is now explicitly visible directly below Languages Spoken in Personal Information.
+- Declaration is forced to the final CV position and pushed toward the bottom of the A4 page.
+- Declaration remains print/PDF friendly.
+
+
+## v14 — Background & Design Studio
+This version adds an optional Background & Design Studio. The default remains the original clean white CV. No background styling is applied until the user selects a background mode or a professional theme.
+
+Available options:
+- None / original white
+- Solid color
+- Gradient with direction and two colors
+- Subtle patterns
+- Custom background image upload
+- Full-page, header, or top-band scope
+- Opacity and readability overlay controls
+- Eight professional theme presets
+- Print/PDF background control
+- Design settings included in CV JSON data
