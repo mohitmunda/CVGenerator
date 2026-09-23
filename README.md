@@ -21,7 +21,6 @@ A browser-based A4 CV/resume generator designed around a clean professional refe
 6. Projects
 7. Certifications & Training
 8. Achievements
-9. Hobbies & Interests
 
 The default layout remains the reference-style A4 design.
 
