@@ -681,3 +681,27 @@
 
 /* v16 declaration sorting */
 .cv > #declarationPreview.declaration-sorted-last{margin-top:auto!important}.cv > #declarationPreview:not(.declaration-sorted-last){margin-top:14px!important}
+
+/* ===== v17 fixes: Career Objective, printable Declaration, functional Design Studio ===== */
+.cv .career-objective-preview{display:none}
+.cv .career-objective-preview .objective-text{padding-left:7mm;white-space:pre-line;overflow-wrap:anywhere}
+.cv .career-objective-preview .objective-extra{padding-left:7mm;margin-top:1.5mm;font-size:.9em;color:#555;font-style:italic}
+
+/* Design Studio must affect the live CV preview immediately. */
+#cv.design-scope-page{transition:background .15s ease,background-image .15s ease}
+#cv.design-scope-header .top{border-radius:2mm;padding:3mm;box-sizing:border-box}
+#cv.design-scope-top-band::before{border-radius:0 0 2mm 2mm}
+#cv.design-active.design-scope-top-band{overflow:hidden}
+#cv.design-active.design-scope-page{background-origin:border-box}
+
+/* Keep background graphics in the print preview only when explicitly enabled. */
+@media print{
+  html:not(.print-backgrounds) #cv.design-active,
+  html:not(.print-backgrounds) #cv.design-active.design-scope-page{background-image:none!important;background-color:#fff!important}
+  html:not(.print-backgrounds) #cv.design-active.design-scope-header .top,
+  html:not(.print-backgrounds) #cv.design-active.design-scope-top-band::before{background-image:none!important;background-color:transparent!important}
+
+  /* Never clip the optional declaration out of the generated PDF. */
+  .cv{height:auto!important;min-height:297mm!important;max-height:none!important;overflow:visible!important}
+  .cv > #declarationPreview{display:block!important;visibility:visible!important;opacity:1!important;break-inside:avoid!important;page-break-inside:avoid!important}
+}
