@@ -157,6 +157,12 @@ Photography</textarea></label><label>Additional Details<textarea id="skillDetail
     <div class="field"><label for="declarationDate">Date</label><input id="declarationDate" type="text" placeholder="Date"></div>
     <div class="field"><label for="declarationSignature">Signature / Name</label><input id="declarationSignature" type="text" placeholder="Signature / Name"></div>
   </div>
+  <div class="signature-image-controls">
+    <label for="declarationSignatureImage">Signature Image <span class="field-muted">(optional)</span></label>
+    <input id="declarationSignatureImage" type="file" accept="image/png,image/jpeg,image/webp,image/gif">
+    <div class="signature-image-actions"><button type="button" class="mini" id="removeSignatureImage">Remove Signature Image</button></div>
+    <small>Upload a small transparent PNG/JPG of your handwritten signature. It will appear below the declaration text.</small>
+  </div>
 </section>
     <div id="customSections"></div>
   </section>
@@ -200,7 +206,25 @@ Photography</textarea></label><label>Additional Details<textarea id="skillDetail
 <option value="Verdana">Verdana</option>
 <option value="Tahoma">Tahoma</option>
 </select></label>
-      <label>Accent<select id="accent"><option value="#111111">Black</option><option value="#1f4b99">Professional Blue</option><option value="#1f6b5c">Forest Green</option><option value="#6b3fa0">Plum</option><option value="#9a5b13">Warm Bronze</option></select></label>
+      <label>Accent<select id="accent">
+<option value="#111111">Black</option>
+<option value="#1f4b99">Professional Blue</option>
+<option value="#2563a6">Royal Blue</option>
+<option value="#0f766e">Teal</option>
+<option value="#1f6b5c">Forest Green</option>
+<option value="#2f6f3e">Emerald Green</option>
+<option value="#6b3fa0">Plum</option>
+<option value="#7c3aed">Violet</option>
+<option value="#9f1239">Burgundy</option>
+<option value="#b42318">Crimson</option>
+<option value="#9a5b13">Warm Bronze</option>
+<option value="#b7791f">Elegant Gold</option>
+<option value="#475569">Slate</option>
+<option value="#334155">Charcoal Blue</option>
+<option value="#0f4c5c">Deep Cyan</option>
+<option value="#8b5e3c">Coffee Brown</option>
+<option value="#374151">Graphite</option>
+</select></label>
       <label>Photo Shape<select id="shape"><option value="rect">Rectangular</option><option value="rounded">Rounded Rectangle</option><option value="circle">Circular</option></select></label>
       <label>Photo Size<select id="photoSize"><option value="reference">Reference</option><option value="small">Small</option><option value="large">Large</option></select></label>
       <label>Section Icons<select id="iconStyle"><option value="line">Professional Line Icons</option><option value="solid">Bold Icons</option><option value="none">No Icons</option></select></label>

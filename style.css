@@ -637,3 +637,16 @@
 /* v19 A4 auto-fit */
 .cv.a4-auto-fitted{transform-origin:top left}
 
+
+/* v23: declaration signature image */
+.signature-image-controls{margin-top:10px;padding-top:10px;border-top:1px dashed #d8dce0}
+.signature-image-controls label{margin-bottom:6px}
+.signature-image-controls input[type=file]{padding:7px;background:#fafafa}
+.signature-image-controls small,.field-muted{display:block;color:#667085;font-size:10px;line-height:1.4;margin-top:5px}
+.signature-image-actions{margin-top:5px}
+.declaration-signature-image-wrap{margin-top:8px;min-height:13mm;display:flex;align-items:flex-end}
+.declaration-signature-image{display:block;max-width:42mm;max-height:18mm;width:auto;height:auto;object-fit:contain;object-position:left bottom}
+@media print{
+  .signature-image-controls{display:none!important}
+  .declaration-signature-image{max-width:42mm;max-height:18mm}
+}

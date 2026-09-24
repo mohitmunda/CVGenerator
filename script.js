@@ -32,6 +32,7 @@ const SECTION_META={
  declaration:{label:'Declaration',icon:'summary'}
 };
 let sectionOrder=DEFAULT_SECTION_ORDER.slice();
+let declarationSignatureImageData='';
 
 const v=id=>(($(id)?.value)||'').trim(); const ls=s=>s.split(/\r?\n/).map(x=>x.trim()).filter(Boolean); const node=(r,s)=>(r.querySelector(s)?.value||'').trim();
 function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
@@ -128,9 +129,9 @@ function update(){
 }
 $('photo').onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{$('pPhoto').src=r.result;update()};r.readAsDataURL(f)};
 document.addEventListener('input',e=>{if(e.target.matches('input,textarea,select'))update()});document.addEventListener('change',e=>{if(e.target.matches('input,textarea,select'))update()});
-function data(){return {name:v('name'),address:v('address'),phone:v('phone'),email:v('email'),website:v('website'),linkedin:v('linkedin'),github:v('github'),location:v('location'),nationality:v('nationality'),title:v('title'),dob:v('dob'),age:v('age'),father:v('father'),mother:v('mother'),gender:v('gender'),marital:v('marital'),languages:v('languages'),skills:v('skills'),skillDetails:v('skillDetails'),summary:v('summary'),projects:v('projects'),certs:v('certs'),achievements:v('achievements'),careerObjective:v('careerObjective'),careerObjectiveAdditional:v('careerObjectiveAdditional'),careerObjectiveEnabled:$('careerObjectiveEnabled')?.checked!==false,declarationEnabled:$('declarationEnabled')?.checked!==false,declarationText:v('declarationText'),declarationPlace:v('declarationPlace'),declarationDate:v('declarationDate'),declarationSignature:v('declarationSignature'),layout:v('layout'),accent:v('accent'),shape:v('shape'),photoSize:v('photoSize'),font:v('font'),iconStyle:v('iconStyle'),compact:$('compact').checked,hidePhoto:$('hidePhoto').checked,basicCustom:readCustom($('basicCustom')),personalCustom:readCustom($('personalCustom')),skillCustom:readCustom($('skillCustom')),exp:[...document.querySelectorAll('#experience .repeat')].map(r=>({t:node(r,'.et'),c:node(r,'.ec'),d:node(r,'.ed'),ex:node(r,'.ex'),custom:readCustom(r.querySelector('.custom-list'))})),edu:[...document.querySelectorAll('#education .repeat')].map(r=>({q:node(r,'.eq'),i:node(r,'.ei'),b:node(r,'.eb'),a:node(r,'.ea'),s:node(r,'.es'),y:node(r,'.ey'),custom:readCustom(r.querySelector('.custom-list'))})),customSections:[...document.querySelectorAll('#customSections .custom-section-editor')].map(r=>({key:r.dataset.orderKey,t:node(r,'.st'),c:node(r,'.sc')})),sectionOrder:sectionOrder.slice()}}
+function data(){return {name:v('name'),address:v('address'),phone:v('phone'),email:v('email'),website:v('website'),linkedin:v('linkedin'),github:v('github'),location:v('location'),nationality:v('nationality'),title:v('title'),dob:v('dob'),age:v('age'),father:v('father'),mother:v('mother'),gender:v('gender'),marital:v('marital'),languages:v('languages'),skills:v('skills'),skillDetails:v('skillDetails'),summary:v('summary'),projects:v('projects'),certs:v('certs'),achievements:v('achievements'),careerObjective:v('careerObjective'),careerObjectiveAdditional:v('careerObjectiveAdditional'),careerObjectiveEnabled:$('careerObjectiveEnabled')?.checked!==false,declarationEnabled:$('declarationEnabled')?.checked!==false,declarationText:v('declarationText'),declarationPlace:v('declarationPlace'),declarationDate:v('declarationDate'),declarationSignature:v('declarationSignature'),declarationSignatureImage:declarationSignatureImageData,layout:v('layout'),accent:v('accent'),shape:v('shape'),photoSize:v('photoSize'),font:v('font'),iconStyle:v('iconStyle'),compact:$('compact').checked,hidePhoto:$('hidePhoto').checked,basicCustom:readCustom($('basicCustom')),personalCustom:readCustom($('personalCustom')),skillCustom:readCustom($('skillCustom')),exp:[...document.querySelectorAll('#experience .repeat')].map(r=>({t:node(r,'.et'),c:node(r,'.ec'),d:node(r,'.ed'),ex:node(r,'.ex'),custom:readCustom(r.querySelector('.custom-list'))})),edu:[...document.querySelectorAll('#education .repeat')].map(r=>({q:node(r,'.eq'),i:node(r,'.ei'),b:node(r,'.eb'),a:node(r,'.ea'),s:node(r,'.es'),y:node(r,'.ey'),custom:readCustom(r.querySelector('.custom-list'))})),customSections:[...document.querySelectorAll('#customSections .custom-section-editor')].map(r=>({key:r.dataset.orderKey,t:node(r,'.st'),c:node(r,'.sc')})),sectionOrder:sectionOrder.slice()}}
 function saveLocal(){try{localStorage.setItem('professionalCV',JSON.stringify(data()))}catch(e){}}
-function apply(d){Object.entries(d).forEach(([k,x])=>{if($(k)&&!['exp','edu','basicCustom','personalCustom','skillCustom','customSections','sectionOrder'].includes(k))$(k).type==='checkbox'?$(k).checked=!!x:$(k).value=x??''});['basicCustom','personalCustom','skillCustom'].forEach(k=>{$(k).innerHTML='';(d[k]||[]).forEach(x=>customRow($(k),x))});$('experience').innerHTML='';$('education').innerHTML='';$('customSections').innerHTML='';sectionOrder=Array.isArray(d.sectionOrder)?d.sectionOrder.slice():DEFAULT_SECTION_ORDER.slice();(d.exp||[]).forEach(addExp);(d.edu||[]).forEach(addEdu);(d.customSections||[]).forEach(addSection);normalizeOrder();update();}
+function apply(d){Object.entries(d).forEach(([k,x])=>{if($(k)&&!['exp','edu','basicCustom','personalCustom','skillCustom','customSections','sectionOrder'].includes(k))$(k).type==='checkbox'?$(k).checked=!!x:$(k).value=x??''});['basicCustom','personalCustom','skillCustom'].forEach(k=>{$(k).innerHTML='';(d[k]||[]).forEach(x=>customRow($(k),x))});$('experience').innerHTML='';$('education').innerHTML='';$('customSections').innerHTML='';sectionOrder=Array.isArray(d.sectionOrder)?d.sectionOrder.slice():DEFAULT_SECTION_ORDER.slice();declarationSignatureImageData=d.declarationSignatureImage||'';const sigFileRestore=$('declarationSignatureImage');if(sigFileRestore)sigFileRestore.value='';(d.exp||[]).forEach(addExp);(d.edu||[]).forEach(addEdu);(d.customSections||[]).forEach(addSection);normalizeOrder();update();}
 $('resetOrder').onclick=()=>{sectionOrder=DEFAULT_SECTION_ORDER.slice();normalizeOrder();update()};
 $('save').onclick=()=>{let b=new Blob([JSON.stringify(data(),null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='cv-data.json';a.click();URL.revokeObjectURL(a.href)};
 $('load').onclick=()=>{let i=document.createElement('input');i.type='file';i.accept='.json';i.onchange=e=>{let r=new FileReader();r.onload=()=>{try{apply(JSON.parse(r.result))}catch(_){alert('Invalid CV data file.')}};r.readAsText(e.target.files[0])};i.click()};
@@ -391,6 +392,17 @@ try{let s=localStorage.getItem('professionalCV');if(s)apply(JSON.parse(s))}catch
       host.appendChild(body);
     }
 
+    if(declarationSignatureImageData){
+      const wrap=document.createElement('div');
+      wrap.className='declaration-signature-image-wrap';
+      const img=document.createElement('img');
+      img.className='declaration-signature-image';
+      img.src=declarationSignatureImageData;
+      img.alt='Signature';
+      wrap.appendChild(img);
+      host.appendChild(wrap);
+    }
+
     if(place || date || signature){
       const meta=document.createElement('div');
       meta.className='declaration-meta-preview';
@@ -422,6 +434,23 @@ try{let s=localStorage.getItem('professionalCV');if(s)apply(JSON.parse(s))}catch
       el.addEventListener('input',renderDeclaration);
       el.addEventListener('change',renderDeclaration);
     }
+  });
+  const sigFile=$('declarationSignatureImage');
+  if(sigFile){
+    sigFile.addEventListener('change',()=>{
+      const file=sigFile.files?.[0];
+      if(!file){declarationSignatureImageData='';renderDeclaration();return;}
+      if(!file.type.startsWith('image/')){sigFile.value='';return;}
+      const reader=new FileReader();
+      reader.onload=()=>{declarationSignatureImageData=String(reader.result||'');renderDeclaration();update();};
+      reader.readAsDataURL(file);
+    });
+  }
+  $('removeSignatureImage')?.addEventListener('click',()=>{
+    declarationSignatureImageData='';
+    if(sigFile)sigFile.value='';
+    renderDeclaration();
+    update();
   });
   renderDeclaration();
 })();
