@@ -107,12 +107,12 @@ function renderDeclarationForUpdate(){
  const enabled=$('declarationEnabled')?.checked!==false;
  const text=v('declarationText'),place=v('declarationPlace'),date=v('declarationDate'),signature=v('declarationSignature');
  host.replaceChildren();
- const show=enabled && !!(text||place||date||signature);
+ const show=enabled && !!(text||place||date||signature||declarationSignatureImageData);
  host.style.display=show?'':'none';
  if(!show)return;
  const h=document.createElement('h3');h.className='section-title';h.textContent='DECLARATION';host.appendChild(h);
  if(text){const p=document.createElement('div');p.className='declaration-text';p.textContent=text;host.appendChild(p)}
- if(signatureImage){const wrap=document.createElement('div');wrap.className='declaration-signature-image-wrap';const img=document.createElement('img');img.className='declaration-signature-image';img.src=signatureImage;img.alt='Signature';wrap.appendChild(img);host.appendChild(wrap)}
+ if(declarationSignatureImageData){const wrap=document.createElement('div');wrap.className='declaration-signature-image-wrap';const img=document.createElement('img');img.className='declaration-signature-image';img.src=declarationSignatureImageData;img.alt='Signature';wrap.appendChild(img);host.appendChild(wrap)}
  if(place||date||signature){const meta=document.createElement('div');meta.className='declaration-meta-preview';[['Place',place],['Date',date],['Signature',signature]].forEach(([l,x])=>{if(x){const d=document.createElement('div');const b=document.createElement('strong');b.textContent=l+': ';d.append(b,document.createTextNode(x));meta.appendChild(d)}});host.appendChild(meta)}
 }
 
@@ -375,7 +375,7 @@ try{let s=localStorage.getItem('professionalCV');if(s)apply(JSON.parse(s))}catch
 
     host.replaceChildren();
 
-    if(!enabled || !enabled.checked || (!text && !place && !date && !signature)){
+    if(!enabled || !enabled.checked || (!text && !place && !date && !signature && !declarationSignatureImageData)){
       host.style.display='none';
       return;
     }
